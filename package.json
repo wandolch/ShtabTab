@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --hot --historyApiFallback --config webpack/config.js",
-    "start:prod": "cross-env NODE_ENV=production webpack-dev-server --historyApiFallback --config webpack/config.js",
+    "start": "webpack-dev-server --hot --port 5000 --historyApiFallback --config webpack/config.js",
+    "start:prod": "cross-env NODE_ENV=production webpack-dev-server --port 5000 --historyApiFallback --config webpack/config.js",
     "build": "webpack --config webpack/config.js",
     "build:prod": "cross-env NODE_ENV=production webpack --config webpack/config.js"
   },

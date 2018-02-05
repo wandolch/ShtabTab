@@ -1,3 +1,4 @@
 export default {
-  getBookmarksUrl: 'bookmarks/'
+  bookmarksUrl: 'bookmarks',
+  collectionsUrl: 'collections'
 };

@@ -6,40 +6,42 @@ import CSSModules from 'react-css-modules';
 import styles from './index.css';
 import { getBookmarks } from '../../states/bookmarksState';
 import { loadBookmarks } from '../../actions/bookmarksActions';
+import Bookmarks from '../../components/Bookmarks';
 
-class Bookmarks extends Component {
+class BookmarksPage extends Component {
   constructor(props) {
     super(props);
     this.props.loadBookmarks();
-
-    setTimeout(() => {
-      console.log(this.props.allBookmarks);
-    }, 1000);
   }
 
   render() {
     return (
-      <div>
+      <div styleName="bookmarks-page-wrapper">
         <Helmet>
           <title>Bookmarks</title>
         </Helmet>
-        <h1 styleName="title">Bookmarks</h1>
-        <p>{this.props.allBookmarks.length ? this.props.allBookmarks[0].bookmarks[0].title : 'nothing'}</p>
+
+        <section styleName="bookmarks-page">
+          <div styleName="menu-container">Menu</div>
+          <div styleName="bookmarks-container">
+            <Bookmarks bookmarks={this.props.bookmarks}/>
+          </div>
+        </section>
       </div>
     );
   }
 }
 
-Bookmarks.propTypes = {
+BookmarksPage.propTypes = {
   loadBookmarks: PropTypes.func.isRequired,
-  allBookmarks: PropTypes.array.isRequired
+  bookmarks: PropTypes.array.isRequired
 };
 
 export default connect(
   state => ({
-    allBookmarks: getBookmarks(state)
+    bookmarks: getBookmarks(state)
   }),
   {
     loadBookmarks
   }
-)(CSSModules(Bookmarks, styles));
+)(CSSModules(BookmarksPage, styles));

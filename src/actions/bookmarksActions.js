@@ -2,12 +2,13 @@ import Request from 'superagent';
 import apiRoutes from '../constants/apiRoutes';
 
 export const actionTypes = {
-  LOAD_BOOKMARKS: 'LOAD_BOOKMARKS'
+  LOAD_BOOKMARKS: 'LOAD_BOOKMARKS',
+  LOAD_COLLECTIONS: 'LOAD_COLLECTIONS'
 };
 
 export const loadBookmarks = () => (dispatch) => {
   Request
-    .get(process.env.API_URL + apiRoutes.getBookmarksUrl)
+    .get(`${process.env.API_URL + apiRoutes.bookmarksUrl}/1`)
     .send()
     .set('accept', 'application/json')
     .end((err, res) => {

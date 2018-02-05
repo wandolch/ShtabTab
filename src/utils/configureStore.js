@@ -4,7 +4,6 @@ import { routerMiddleware } from 'react-router-redux';
 import reducers from '../reducers';
 import initialState from '../states/';
 
-
 export default function configureStore(history) {
   const middlewares = [
     thunk,

@@ -8,8 +8,12 @@ export default (state = bookmarksState, action) => {
       allBookmarks: action.payload
     });
 
+  case actionTypes.LOAD_COLLECTIONS:
+    return Object.assign({}, state, {
+      collections: action.payload
+    });
+
   default:
     return state;
   }
 };
-

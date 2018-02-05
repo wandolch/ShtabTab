@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-export default class NotFound extends Component {
+export default class LoginPage extends Component {
   render() {
     return (
-      <h1>404</h1>
+      <h1>Login</h1>
     );
   }
 }

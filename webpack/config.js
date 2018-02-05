@@ -24,9 +24,7 @@ const baseConfig = {
           options: {
             presets: ['es2015', 'react', 'stage-2']
           }
-        },
-        'eslint-loader'
-        ]
+        }]
       },
       {
         test: /\.css$/,
