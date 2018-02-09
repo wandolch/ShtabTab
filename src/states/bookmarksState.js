@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
 export const bookmarksState = {
-  currentBookmarks: [],
-  collections: [],
+  currentBookmarks: null,
+  collections: null,
   bookmarksLoading: false,
   bookmarksError: false
 };

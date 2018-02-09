@@ -12,7 +12,7 @@ import { bookmarkShape } from '../../model/bookmarkShape';
 class BookmarksPage extends Component {
   constructor(props) {
     super(props);
-    this.props.dispatch(fetchBookmarks(1));
+    this.props.dispatch(fetchBookmarks(this.props.match.params.id));
   }
 
   showBookmarks() {
@@ -44,10 +44,11 @@ class BookmarksPage extends Component {
 }
 
 BookmarksPage.propTypes = {
-  bookmarks: PropTypes.arrayOf(bookmarkShape).isRequired,
+  bookmarks: PropTypes.arrayOf(bookmarkShape),
   dispatch: PropTypes.func.isRequired,
   bookmarksLoading: PropTypes.bool.isRequired,
-  bookmarksError: PropTypes.bool.isRequired
+  bookmarksError: PropTypes.bool.isRequired,
+  match: PropTypes.any.isRequired
 };
 
 export default connect(state => ({

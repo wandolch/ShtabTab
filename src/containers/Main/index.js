@@ -8,7 +8,8 @@ function Main() {
   return (
     <div styleName="main-wrapper">
       <Switch>
-        <Route exact path="/" component={createPageLoadable('BookmarksPage')} />
+        <Redirect exact from="/" to="collection/0"/>
+        <Route exact path="/collection/:id" component={createPageLoadable('BookmarksPage')} />
         <Route exact path="/settings" component={createPageLoadable('Settings')} />
         <Redirect to="/not-found"/>
       </Switch>

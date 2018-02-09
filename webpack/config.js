@@ -6,13 +6,19 @@ const buildProdConfig = require('./prod');
 const apiUrl = require('../environment');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const port = 5000;
 const prod = (process.env.NODE_ENV === 'production');
 const baseConfig = {
   entry: ['babel-polyfill', './src/index.js'],
   output: {
     path: path.resolve(process.cwd(), 'dist'),
     filename: 'bundle.js',
+    publicPath: '/',
     chunkFilename: '[name].chunk.js'
+  },
+  devServer: {
+    historyApiFallback: true,
+    port
   },
   module: {
     rules: [
