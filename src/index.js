@@ -6,9 +6,11 @@ import { Provider } from 'react-redux';
 import App from './containers/App/';
 import configureStore from './utils/configureStore';
 import './global.css';
+import rootSaga from './sagas';
 
 const history = createHistory();
 const store = configureStore(history);
+store.runSaga(rootSaga);
 const MOUNT_NODE = document.getElementById('root');
 
 ReactDOM.render(

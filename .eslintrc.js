@@ -38,7 +38,6 @@ module.exports = {
     "no-unused-expressions": "warn",
     "no-useless-concat": "warn",
     "block-scoped-var": "error",
-    "consistent-return": "error",
     "no-debugger": 0,
     "import/no-extraneous-dependencies": 0,
     "react/jsx-tag-spacing": 0,
@@ -47,6 +46,9 @@ module.exports = {
     "import/no-dynamic-require": 0,
     "import/no-unresolved": 0,
     "global-require": 0,
-    "no-param-reassign": ["error", { "props": false }]
+    "no-param-reassign": 0,
+    "max-len": ["error", { "code": 200 }],
+    "import/prefer-default-export": 0,
+    "consistent-return": 0
   }
 };

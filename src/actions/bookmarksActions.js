@@ -1,21 +1,23 @@
-import Request from 'superagent';
-import apiRoutes from '../constants/apiRoutes';
+import { actionTypes } from '../constants/actionTypes';
 
-export const actionTypes = {
-  LOAD_BOOKMARKS: 'LOAD_BOOKMARKS',
-  LOAD_COLLECTIONS: 'LOAD_COLLECTIONS'
-};
+export function fetchBookmarks(id) {
+  return {
+    type: actionTypes.FETCH_BOOKMARKS,
+    payload: id
+  };
+}
 
-export const loadBookmarks = () => (dispatch) => {
-  Request
-    .get(`${process.env.API_URL + apiRoutes.bookmarksUrl}/1`)
-    .send()
-    .set('accept', 'application/json')
-    .end((err, res) => {
-      if (err) {
-        console.log('err', err);
-      } else {
-        dispatch({ type: actionTypes.LOAD_BOOKMARKS, payload: res.body });
-      }
-    });
-};
+export function bookmarksFetched(bookmarks) {
+  return {
+    type: actionTypes.FETCH_BOOKMARKS_SUCCESS,
+    payload: bookmarks
+  };
+}
+
+export function bookmarksFetchingError(error) {
+  return {
+    type: actionTypes.FETCH_BOOKMARKS_ERROR,
+    payload: error
+  };
+}
+

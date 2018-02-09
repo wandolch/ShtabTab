@@ -8,7 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const prod = (process.env.NODE_ENV === 'production');
 const baseConfig = {
-  entry: './src/index.js',
+  entry: ['babel-polyfill', './src/index.js'],
   output: {
     path: path.resolve(process.cwd(), 'dist'),
     filename: 'bundle.js',

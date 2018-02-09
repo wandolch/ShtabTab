@@ -4,14 +4,26 @@ import { Helmet } from 'react-helmet';
 import React, { Component } from 'react';
 import CSSModules from 'react-css-modules';
 import styles from './index.css';
-import { getBookmarks } from '../../states/bookmarksState';
-import { loadBookmarks } from '../../actions/bookmarksActions';
+import { getBookmarksError, getBookmarksLoading, getCurrentBookmarks } from '../../states/bookmarksState';
 import Bookmarks from '../../components/Bookmarks';
+import { fetchBookmarks } from '../../actions/bookmarksActions';
+import { bookmarkShape } from '../../model/bookmarkShape';
 
 class BookmarksPage extends Component {
   constructor(props) {
     super(props);
-    this.props.loadBookmarks();
+    this.props.dispatch(fetchBookmarks(1));
+  }
+
+  showBookmarks() {
+    const bm = this.props.bookmarks;
+    if (bm) {
+      return <Bookmarks bookmarks={bm}/>;
+    } else if (this.props.bookmarksLoading) {
+      return (<h1>loading</h1>);
+    } else if (this.props.bookmarksError) {
+      return (<h1>ERROR</h1>);
+    }
   }
 
   render() {
@@ -20,11 +32,10 @@ class BookmarksPage extends Component {
         <Helmet>
           <title>Bookmarks</title>
         </Helmet>
-
         <section styleName="bookmarks-page">
           <div styleName="menu-container">Menu</div>
           <div styleName="bookmarks-container">
-            <Bookmarks bookmarks={this.props.bookmarks}/>
+            {this.showBookmarks()}
           </div>
         </section>
       </div>
@@ -33,15 +44,14 @@ class BookmarksPage extends Component {
 }
 
 BookmarksPage.propTypes = {
-  loadBookmarks: PropTypes.func.isRequired,
-  bookmarks: PropTypes.array.isRequired
+  bookmarks: PropTypes.arrayOf(bookmarkShape).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  bookmarksLoading: PropTypes.bool.isRequired,
+  bookmarksError: PropTypes.bool.isRequired
 };
 
-export default connect(
-  state => ({
-    bookmarks: getBookmarks(state)
-  }),
-  {
-    loadBookmarks
-  }
-)(CSSModules(BookmarksPage, styles));
+export default connect(state => ({
+  bookmarks: getCurrentBookmarks(state),
+  bookmarksLoading: getBookmarksLoading(state),
+  bookmarksError: getBookmarksError(state)
+}))(CSSModules(BookmarksPage, styles));

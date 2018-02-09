@@ -3,18 +3,19 @@
 }
 
 .bookmarks-page {
-  lost-utility: clearfix;
   height: 100%;
+  display: flex;
 }
 
 .menu-container {
-  lost-column: 1/2;
+  width:260px;
   background-color: gray;
   height: 100%;
 
 }
 
 .bookmarks-container {
+  width:calc(100% - 260px);
   height: 100%;
 }
 
