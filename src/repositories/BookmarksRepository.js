@@ -5,4 +5,8 @@ export default class BookmarksRepository {
   static fetchBookmarksByCollectionId(id) {
     return TransportService.get(`${apiRoutes.bookmarksUrl}/${id}`);
   }
+
+  static fetchCollections() {
+    return TransportService.get(apiRoutes.collectionsUrl);
+  }
 }

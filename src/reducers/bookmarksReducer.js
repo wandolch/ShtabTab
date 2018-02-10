@@ -24,7 +24,26 @@ export default (state = bookmarksState, action) => {
 
   case actionTypes.FETCH_COLLECTIONS:
     return Object.assign({}, state, {
-      collections: action.payload
+      collectionsLoading: true,
+      collectionsError: false
+    });
+
+  case actionTypes.FETCH_COLLECTIONS_SUCCESS:
+    return Object.assign({}, state, {
+      collections: action.payload,
+      collectionsLoading: false,
+      collectionsError: false
+    });
+
+  case actionTypes.FETCH_COLLECTIONS_ERROR:
+    return Object.assign({}, state, {
+      collectionsLoading: false,
+      collectionsError: true
+    });
+
+  case actionTypes.SET_CURRENT_COLLECTION:
+    return Object.assign({}, state, {
+      currentCollection: action.payload
     });
 
   default:

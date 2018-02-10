@@ -1,8 +1,9 @@
 import { all, fork } from 'redux-saga/effects';
-import { bookmarkSaga } from './bookmarksSagas';
+import { bookmarksSaga, collectionsSaga } from './bookmarksSagas';
 
 export default function* root() {
   yield all([
-    fork(bookmarkSaga)
+    fork(bookmarksSaga),
+    fork(collectionsSaga)
   ]);
 }

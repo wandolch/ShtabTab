@@ -21,3 +21,30 @@ export function bookmarksFetchingError(error) {
   };
 }
 
+export function fetchCollections() {
+  return {
+    type: actionTypes.FETCH_COLLECTIONS,
+  };
+}
+
+export function collectionsFetched(collections) {
+  return {
+    type: actionTypes.FETCH_COLLECTIONS_SUCCESS,
+    payload: collections
+  };
+}
+
+export function collectionsFetchingError(error) {
+  return {
+    type: actionTypes.FETCH_COLLECTIONS_ERROR,
+    payload: error
+  };
+}
+
+export function setCurrentCollection(collection) {
+  return {
+    type: actionTypes.SET_CURRENT_COLLECTION,
+    payload: collection
+  };
+}
+
