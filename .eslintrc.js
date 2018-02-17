@@ -50,6 +50,8 @@ module.exports = {
     "max-len": ["error", { "code": 200 }],
     "import/prefer-default-export": 0,
     "consistent-return": 0,
-    "react/require-default-props": 0
+    "react/require-default-props": 0,
+    "prefer-destructuring": 0,
+    "default-case": 0
   }
 };

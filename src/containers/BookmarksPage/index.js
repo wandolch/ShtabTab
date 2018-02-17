@@ -11,6 +11,7 @@ import {
 import { fetchBookmarks, fetchCollections, setCurrentCollection } from '../../actions/bookmarksActions';
 import { bookmarkShape } from '../../model/bookmarkShape';
 import { collectionShape } from '../../model/collectionShape';
+import BookmarksView from '../../components/BookmarkView/index';
 
 class BookmarksPage extends Component {
   componentWillMount() {
@@ -33,8 +34,8 @@ class BookmarksPage extends Component {
     const bm = this.props.bookmarks;
     if (bm) {
       return (
-        <div styleName="bookmarks-wrapper">
-          {bm.map(item => (<div key={item.id}>{item.title}</div>))}
+        <div>
+          {bm.map(item => (<BookmarksView item={item} key={item.id}/>))}
         </div>
       );
     } else if (this.props.bookmarksLoading) {
@@ -70,6 +71,7 @@ class BookmarksPage extends Component {
             {this.showCollections()}
           </div>
           <div styleName="bookmarks-container">
+            <h1 styleName="collection-title">{this.getCurrentCollectionTitle()}</h1>
             {this.showBookmarks()}
           </div>
         </section>
