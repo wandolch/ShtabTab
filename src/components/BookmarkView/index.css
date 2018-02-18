@@ -4,25 +4,26 @@
   flex-direction: row;
   align-items: flex-end;
   border-radius: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 1.5vh;
   text-decoration: none;
-  box-shadow: 0 7px 113px -27px rgba(0,0,0,0.58);
-  transition: 0.4s;
+  box-shadow: 0 3px 47px -13px rgba(0,0,0,0.75);
+  transition: 0.4s easeOutSine;
   object-fit: cover;
   overflow: hidden;
+  position: relative;
+  z-index: 10;
 
   .bookmark-text{
-    transition: 0.2s;
+    max-width: 50%;
+    white-space: nowrap;
+    overflow: hidden;
     margin-right: 50px;
     margin-left: 25px;
-    margin-bottom: 10px;
-
-    .bookmark-title{
-      font-size: 38px;
-    }
+    margin-bottom: 1vh;
+    font-size: 3.7vh;
 
     .bookmark-link-text{
-      font-size: 21px;
+      font-size: 0.55em;
     }
   }
 
@@ -33,7 +34,7 @@
     flex-grow: 1;
     flex-shrink: 2;
     border-bottom-right-radius: 9px;
-    transition: 1s;
+    transition: transform 1s easeOutQuad;
   }
 
   &:hover{

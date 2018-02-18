@@ -47,11 +47,12 @@ module.exports = {
     "import/no-unresolved": 0,
     "global-require": 0,
     "no-param-reassign": 0,
-    "max-len": ["error", { "code": 200 }],
+    "max-len": ["error", { "code": 150 }],
     "import/prefer-default-export": 0,
     "consistent-return": 0,
     "react/require-default-props": 0,
     "prefer-destructuring": 0,
-    "default-case": 0
+    "default-case": 0,
+    "no-extra-boolean-cast": 0
   }
 };

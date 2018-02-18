@@ -5,21 +5,21 @@ import TransformService from '../../services/TransformService';
 import { bookmarkShape } from '../../model/bookmarkShape';
 
 const bookmarkSizes = {
-  0: '90px',
-  1: '130px',
-  2: '190px'
+  0: '8.94vh',
+  1: '12.92vh',
+  2: '18.88vh'
 };
 
 const bookmarkPaddings = {
-  0: '10px',
-  1: '15px',
-  2: '30px'
+  0: '1vh',
+  1: '1.5vh',
+  2: '2.98vh'
 };
 
 const bookmarkImageSizes = {
-  0: '70px',
-  1: '100px',
-  2: '145px'
+  0: '6.95vh',
+  1: '9.94vh',
+  2: '14.41vh'
 };
 
 class BookmarksView extends Component {
@@ -44,7 +44,7 @@ class BookmarksView extends Component {
         style={bookmarkWrapperCss}
         styleName="bookmark-wrapper">
         <div styleName="bookmark-text" style={textBlockCss}>
-          <div styleName="bookmark-title">{this.props.item.title}</div>
+          <div>{this.props.item.title}</div>
           <div styleName="bookmark-link-text">{TransformService.extractHostname(this.props.item.link)}</div>
         </div>
         <div

@@ -1,17 +1,23 @@
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { CSSTransitionGroup } from 'react-transition-group';
 import { Helmet } from 'react-helmet';
 import React, { Component } from 'react';
 import CSSModules from 'react-css-modules';
 import styles from './index.css';
 import {
   getBookmarksError, getBookmarksLoading, getCollections, getCollectionsError, getCollectionsLoading,
-  getCurrentBookmarks, getCurrentCollection
+  getCurrentBookmarks, getCurrentCollection, getSearchQuery
 } from '../../states/bookmarksState';
-import { fetchBookmarks, fetchCollections, setCurrentCollection } from '../../actions/bookmarksActions';
+import {
+  fetchBookmarks, fetchCollections, setBookmarksSearch,
+  setCurrentCollection
+} from '../../actions/bookmarksActions';
 import { bookmarkShape } from '../../model/bookmarkShape';
 import { collectionShape } from '../../model/collectionShape';
 import BookmarksView from '../../components/BookmarkView/index';
+import LoadingIndicator from '../../components/LoadingIndicator/index';
+import SearchInput from '../../components/SearchInput/index';
 
 class BookmarksPage extends Component {
   componentWillMount() {
@@ -26,22 +32,45 @@ class BookmarksPage extends Component {
     }
   }
 
+  onSearch = (query) => {
+    this.props.dispatch(setBookmarksSearch(query));
+  };
+
   getCurrentCollectionTitle() {
     return this.props.currentCollection ? this.props.currentCollection.title : '';
   }
 
-  showBookmarks() {
+  checkBookmarksEmpty = () => {
+    if (!this.props.bookmarks.length) {
+      if (!!this.props.searchQuery.length) {
+        return (<div styleName="nothing-found">No bookmarks found for your query «<b>{this.props.searchQuery}</b>»</div>);
+      }
+      return (<div styleName="no-content">No bookmarks</div>);
+    }
+  };
+
+  showBookmarksSide() {
     const bm = this.props.bookmarks;
     if (bm) {
       return (
         <div>
-          {bm.map(item => (<BookmarksView item={item} key={item.id}/>))}
+          <div styleName="bookmarks-header">
+            <h1 styleName="collection-title">{this.getCurrentCollectionTitle()}</h1>
+            <SearchInput onSearch={this.onSearch} />
+          </div>
+          <div>
+            <CSSTransitionGroup
+              transitionAppear
+              transitionAppearTimeout={500}
+              transitionEnterTimeout={300}
+              transitionLeaveTimeout={300}
+              transitionName={styles}>
+              {bm.map(item => (<BookmarksView item={item} key={item.id}/>))}
+            </CSSTransitionGroup>
+            {this.checkBookmarksEmpty()}
+          </div>
         </div>
       );
-    } else if (this.props.bookmarksLoading) {
-      return (<h1>loading</h1>);
-    } else if (this.props.bookmarksError) {
-      return (<h1>ERROR</h1>);
     }
   }
 
@@ -53,10 +82,14 @@ class BookmarksPage extends Component {
           {col.map(item => (<div key={item.id}>{item.title}</div>))}
         </div>
       );
-    } else if (this.props.collectionsLoading) {
-      return (<h1>loading</h1>);
-    } else if (this.props.collectionsError) {
-      return (<h1>ERROR</h1>);
+    }
+  }
+
+  showLoading() {
+    if (this.props.collectionsLoading || this.props.bookmarksLoading) {
+      return (
+        <LoadingIndicator error={this.props.collectionsError || this.props.bookmarksError}/>
+      );
     }
   }
 
@@ -71,8 +104,8 @@ class BookmarksPage extends Component {
             {this.showCollections()}
           </div>
           <div styleName="bookmarks-container">
-            <h1 styleName="collection-title">{this.getCurrentCollectionTitle()}</h1>
-            {this.showBookmarks()}
+            {this.showLoading()}
+            {this.showBookmarksSide()}
           </div>
         </section>
       </div>
@@ -89,7 +122,8 @@ BookmarksPage.propTypes = {
   collections: PropTypes.arrayOf(collectionShape),
   collectionsLoading: PropTypes.bool.isRequired,
   collectionsError: PropTypes.bool.isRequired,
-  currentCollection: collectionShape
+  currentCollection: collectionShape,
+  searchQuery: PropTypes.string
 };
 
 export default connect(state => ({
@@ -99,5 +133,6 @@ export default connect(state => ({
   collections: getCollections(state),
   collectionsLoading: getCollectionsLoading(state),
   collectionsError: getCollectionsError(state),
-  currentCollection: getCurrentCollection(state)
+  currentCollection: getCurrentCollection(state),
+  searchQuery: getSearchQuery(state)
 }))(CSSModules(BookmarksPage, styles));

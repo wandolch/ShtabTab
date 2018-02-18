@@ -4,6 +4,7 @@ import CSSModules from 'react-css-modules';
 import { Switch, Route } from 'react-router-dom';
 import createPageLoadable from '../../utils/pageLoadable';
 import styles from './index.css';
+import Main from '../Main';
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
       <Switch>
         <Route path="/login" exact component={createPageLoadable('LoginPage')} />
         <Route path="/not-found" component={createPageLoadable('NotFoundPage')} />
-        <Route path="/" component={createPageLoadable('Main', true)} />
+        <Route path="/" component={Main} />
       </Switch>
     </div>
   );

@@ -23,7 +23,7 @@ export function bookmarksFetchingError(error) {
 
 export function fetchCollections() {
   return {
-    type: actionTypes.FETCH_COLLECTIONS,
+    type: actionTypes.FETCH_COLLECTIONS
   };
 }
 
@@ -45,6 +45,13 @@ export function setCurrentCollection(collection) {
   return {
     type: actionTypes.SET_CURRENT_COLLECTION,
     payload: collection
+  };
+}
+
+export function setBookmarksSearch(query) {
+  return {
+    type: actionTypes.SET_BOOKMARKS_SEARCH,
+    payload: query
   };
 }
 

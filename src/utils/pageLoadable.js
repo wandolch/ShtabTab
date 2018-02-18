@@ -1,9 +1,9 @@
 import Loadable from 'react-loadable';
 import LoadingIndicator from '../components/LoadingIndicator';
 
-export default (name, abstract) => Loadable({
+export default (name, loadingView) => Loadable({
   loader: () => import(`../containers/${name}`),
-  loading: abstract ? () => null : LoadingIndicator,
-  delay: 300
+  loading: loadingView || LoadingIndicator,
+  delay: 0
 });
 

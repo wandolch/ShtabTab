@@ -46,6 +46,11 @@ export default (state = bookmarksState, action) => {
       currentCollection: action.payload
     });
 
+  case actionTypes.SET_BOOKMARKS_SEARCH:
+    return Object.assign({}, state, {
+      searchQuery: action.payload.toLowerCase()
+    });
+
   default:
     return state;
   }
