@@ -1,19 +1,21 @@
-.bookmark-wrapper{
+@import "../../style/variables.css";
+
+.bookmark-container {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
   align-items: flex-end;
   border-radius: 10px;
-  margin-bottom: 1.5vh;
   text-decoration: none;
-  box-shadow: 0 3px 47px -13px rgba(0,0,0,0.75);
-  transition: 0.4s easeOutSine;
+  box-shadow: 0 15px 50px -30px rgba(0, 0, 0, .75);
   object-fit: cover;
   overflow: hidden;
   position: relative;
   z-index: 10;
+  margin-bottom: 1.5vh;
+  transition: filter 0.4s easeOutSine;
 
-  .bookmark-text{
+  .bookmark-text {
     max-width: 50%;
     white-space: nowrap;
     overflow: hidden;
@@ -22,25 +24,24 @@
     margin-bottom: 1vh;
     font-size: 3.7vh;
 
-    .bookmark-link-text{
+    .bookmark-link-text {
       font-size: 0.55em;
     }
   }
 
-  .bookmark-image-wrapper{
+  .bookmark-image-wrapper {
     background-size: cover;
     background: no-repeat top left;
     max-width: 70%;
     flex-grow: 1;
     flex-shrink: 2;
     border-bottom-right-radius: 9px;
-    transition: transform 1s easeOutQuad;
+    transition: 0.7s easeOutQuad;
   }
 
-  &:hover{
-    .bookmark-image-wrapper{
-      transform: scale(1.05);
+  &:hover {
+    .bookmark-image-wrapper {
+      transform: scale(1.02);
     }
-    transform: scale(1.005);
   }
 }

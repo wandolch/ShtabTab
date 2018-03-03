@@ -42,7 +42,7 @@ class BookmarksView extends Component {
         href={this.props.item.link}
         target="_blank"
         style={bookmarkWrapperCss}
-        styleName="bookmark-wrapper">
+        styleName="bookmark-container">
         <div styleName="bookmark-text" style={textBlockCss}>
           <div>{this.props.item.title}</div>
           <div styleName="bookmark-link-text">{TransformService.extractHostname(this.props.item.link)}</div>

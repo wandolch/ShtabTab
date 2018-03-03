@@ -1,3 +1,5 @@
+@import "../../style/variables.css";
+
 .bookmarks-page-wrapper {
   height: 100%;
 
@@ -21,9 +23,9 @@
   }
 
   .bookmarks-container {
-    width:calc(100% - 260px);
+    width:calc(100% - $menuWidth);
     height: 100%;
-    padding: 3.97vh 25px 0 25px;
+    padding: 3.97vh 25px 0;
     overflow-y: auto;
     overflow-x: hidden;
 

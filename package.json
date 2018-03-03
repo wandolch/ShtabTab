@@ -31,6 +31,7 @@
     "offline-plugin": "^4.8.4",
     "postcss-cssnext": "^3.0.2",
     "postcss-easings": "^1.0.1",
+    "postcss-import": "^11.1.0",
     "postcss-loader": "^2.0.9",
     "postcss-nested": "^3.0.0",
     "postcss-simple-vars": "^4.1.0",

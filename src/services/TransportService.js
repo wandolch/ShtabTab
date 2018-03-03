@@ -16,7 +16,7 @@ export default class TransportService {
     return axios.put(url, JSON.stringify(data), headers);
   }
 
-  static delete(url, params, isAbsolute) {
+  static del(url, params, isAbsolute) {
     if (!isAbsolute) { url = process.env.API_URL + url; }
     return axios.delete(url, { params });
   }
