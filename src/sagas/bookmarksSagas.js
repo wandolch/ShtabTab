@@ -6,7 +6,7 @@ import {
   collectionsFetchingError
 } from '../actions/bookmarksActions';
 
-export function* fetchBookmarksByCollectionId(action) {
+function* fetchBookmarksByCollectionId(action) {
   try {
     const res = yield call(BookmarksRepository.fetchBookmarksByCollectionId, action.payload);
     yield put(bookmarksFetched(res.data));
@@ -19,7 +19,7 @@ export function* bookmarksSaga() {
   yield takeLatest(actionTypes.FETCH_BOOKMARKS, fetchBookmarksByCollectionId);
 }
 
-export function* fetchCollections() {
+function* fetchCollections() {
   try {
     const res = yield call(BookmarksRepository.fetchCollections);
     yield put(collectionsFetched(res.data));

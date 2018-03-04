@@ -1,4 +1,5 @@
 export default {
   bookmarksUrl: 'bookmarks',
-  collectionsUrl: 'collections'
+  collectionsUrl: 'collections',
+  signInUrl: 'signIn'
 };
