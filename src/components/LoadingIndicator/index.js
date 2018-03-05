@@ -5,7 +5,7 @@ import styles from './index.css';
 
 const LoadingIndicator = (props) => {
   if (props.error) {
-    return <div>Error!</div>; // TODO move this to errorHandlerService
+    // TODO errorHandlerService
   }
   return (
     <div styleName="showbox">

@@ -10,9 +10,6 @@ export default (state = commonState, action) => {
     });
 
   case actionTypes.SIGN_IN_SUCCESS:
-    if(action.payload){
-      debugger;
-    }
     localStorage.setItem('st-user', action.payload);
     return Object.assign({}, state, {
       user: action.payload,
