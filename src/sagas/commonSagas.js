@@ -1,14 +1,14 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import CommonRepository from '../repositories/CommonRepository';
 import { actionTypes } from '../constants/actionTypes';
-import { signInSuccess, signInError } from '../actions/commonActions';
+import { signInSuccess, applicationError } from '../actions/commonActions';
 
 function* signInAndFetchUser(action) {
   try {
     const res = yield call(CommonRepository.signIn, action.payload);
-    yield put(signInSuccess(res.data));
+    yield put(signInSuccess(res));
   } catch (e) {
-    yield put(signInError(e));
+    yield put(applicationError(e));
   }
 }
 

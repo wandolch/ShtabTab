@@ -2,12 +2,10 @@ import { createSelector } from 'reselect';
 
 export const bookmarksState = {
   currentBookmarks: null,
-  bookmarksLoading: false,
-  bookmarksError: false,
+  bookmarksLoading: true,
   collections: null,
   currentCollection: null,
-  collectionsLoading: false,
-  collectionsError: false,
+  collectionsLoading: true,
   searchQuery: ''
 };
 
@@ -23,10 +21,8 @@ export const getCurrentBookmarks = createSelector(
   }
 );
 export const getBookmarksLoading = createSelector([getBookmarksState], state => state.bookmarksLoading);
-export const getBookmarksError = createSelector([getBookmarksState], state => state.bookmarksError);
 export const getCollections = createSelector([getBookmarksState], state => state.collections);
 export const getCurrentCollection = createSelector([getBookmarksState], state => state.currentCollection);
 export const getCollectionsLoading = createSelector([getBookmarksState], state => state.collectionsLoading);
-export const getCollectionsError = createSelector([getBookmarksState], state => state.collectionsError);
 export const getSearchQuery = createSelector([getBookmarksState], state => state.searchQuery);
 

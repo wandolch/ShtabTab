@@ -14,11 +14,10 @@ export function signInSuccess(user) {
   };
 }
 
-export function signInError(error) {
+export function applicationError(error) {
   return {
-    type: actionTypes.SIGN_IN_ERROR,
+    type: actionTypes.APP_ERROR,
     payload: error
   };
 }
-
 

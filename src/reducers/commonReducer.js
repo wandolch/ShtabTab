@@ -10,17 +10,15 @@ export default (state = commonState, action) => {
     });
 
   case actionTypes.SIGN_IN_SUCCESS:
-    localStorage.setItem('st-user', action.payload);
     return Object.assign({}, state, {
       user: action.payload,
       signInLoading: false,
       signInError: false
     });
 
-  case actionTypes.SIGN_IN_ERROR:
+  case actionTypes.APP_ERROR:
     return Object.assign({}, state, {
-      signInLoading: false,
-      signInError: true
+      appError: action.payload
     });
 
   default:

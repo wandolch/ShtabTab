@@ -1,17 +1,15 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import BookmarksRepository from '../repositories/BookmarksRepository';
 import { actionTypes } from '../constants/actionTypes';
-import {
-  bookmarksFetched, bookmarksFetchingError, collectionsFetched,
-  collectionsFetchingError
-} from '../actions/bookmarksActions';
+import { bookmarksFetched, collectionsFetched } from '../actions/bookmarksActions';
+import { applicationError } from '../actions/commonActions';
 
 function* fetchBookmarksByCollectionId(action) {
   try {
     const res = yield call(BookmarksRepository.fetchBookmarksByCollectionId, action.payload);
-    yield put(bookmarksFetched(res.data));
+    yield put(bookmarksFetched(res));
   } catch (e) {
-    yield put(bookmarksFetchingError(e));
+    yield put(applicationError(e));
   }
 }
 
@@ -22,9 +20,9 @@ export function* bookmarksSaga() {
 function* fetchCollections() {
   try {
     const res = yield call(BookmarksRepository.fetchCollections);
-    yield put(collectionsFetched(res.data));
+    yield put(collectionsFetched(res));
   } catch (e) {
-    yield put(collectionsFetchingError(e));
+    yield put(applicationError(e));
   }
 }
 

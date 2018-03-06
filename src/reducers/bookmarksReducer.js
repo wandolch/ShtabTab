@@ -16,12 +16,6 @@ export default (state = bookmarksState, action) => {
       bookmarksError: false
     });
 
-  case actionTypes.FETCH_BOOKMARKS_ERROR:
-    return Object.assign({}, state, {
-      bookmarksLoading: false,
-      bookmarksError: true
-    });
-
   case actionTypes.FETCH_COLLECTIONS:
     return Object.assign({}, state, {
       collectionsLoading: true,
@@ -33,12 +27,6 @@ export default (state = bookmarksState, action) => {
       collections: action.payload,
       collectionsLoading: false,
       collectionsError: false
-    });
-
-  case actionTypes.FETCH_COLLECTIONS_ERROR:
-    return Object.assign({}, state, {
-      collectionsLoading: false,
-      collectionsError: true
     });
 
   case actionTypes.SET_CURRENT_COLLECTION:

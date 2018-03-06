@@ -5,36 +5,40 @@ import { Helmet } from 'react-helmet';
 import React, { Component } from 'react';
 import CSSModules from 'react-css-modules';
 import styles from './index.css';
+import { getCollections, getCurrentBookmarks, getCurrentCollection, getSearchQuery } from '../../states/bookmarksState';
 import {
-  getBookmarksError, getBookmarksLoading, getCollections, getCollectionsError, getCollectionsLoading,
-  getCurrentBookmarks, getCurrentCollection, getSearchQuery
-} from '../../states/bookmarksState';
-import {
-  fetchBookmarks, fetchCollections, setBookmarksSearch,
+  fetchCollections, fetchBookmarks, setBookmarksSearch,
   setCurrentCollection
 } from '../../actions/bookmarksActions';
 import { bookmarkShape } from '../../model/bookmarkShape';
 import { collectionShape } from '../../model/collectionShape';
 import BookmarksView from '../../components/BookmarkView/index';
-import LoadingIndicator from '../../components/LoadingIndicator/index';
 import SearchInput from '../../components/SearchInput/index';
 
 class BookmarksPage extends Component {
   componentWillMount() {
-    this.props.dispatch(fetchCollections());
+    if (!this.props.collections) {
+      this.props.dispatch(fetchCollections());
+    } else {
+      this.setCurrentCollections(this.props.collections);
+    }
     this.props.dispatch(fetchBookmarks(this.props.match.params.id));
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.collections !== this.props.collections) {
-      const currentCollection = nextProps.collections.find(collection => collection.id === +this.props.match.params.id);
-      this.props.dispatch(setCurrentCollection(currentCollection));
+      this.setCurrentCollections(nextProps.collections);
     }
   }
 
   onSearch = (query) => {
     this.props.dispatch(setBookmarksSearch(query));
   };
+
+  setCurrentCollections(collections) {
+    const currentCollection = collections.find(collection => collection.id === +this.props.match.params.id);
+    this.props.dispatch(setCurrentCollection(currentCollection));
+  }
 
   getCurrentCollectionTitle() {
     return this.props.currentCollection ? this.props.currentCollection.title : '';
@@ -85,14 +89,6 @@ class BookmarksPage extends Component {
     }
   }
 
-  showLoading() {
-    if (this.props.collectionsLoading || this.props.bookmarksLoading) {
-      return (
-        <LoadingIndicator error={this.props.collectionsError || this.props.bookmarksError}/>
-      );
-    }
-  }
-
   render() {
     return (
       <div styleName="bookmarks-page-wrapper">
@@ -104,7 +100,6 @@ class BookmarksPage extends Component {
             {this.showCollections()}
           </div>
           <div styleName="bookmarks-container">
-            {this.showLoading()}
             {this.showBookmarksSide()}
           </div>
         </section>
@@ -116,23 +111,15 @@ class BookmarksPage extends Component {
 BookmarksPage.propTypes = {
   bookmarks: PropTypes.arrayOf(bookmarkShape),
   dispatch: PropTypes.func.isRequired,
-  bookmarksLoading: PropTypes.bool.isRequired,
-  bookmarksError: PropTypes.bool.isRequired,
   match: PropTypes.any.isRequired,
   collections: PropTypes.arrayOf(collectionShape),
-  collectionsLoading: PropTypes.bool.isRequired,
-  collectionsError: PropTypes.bool.isRequired,
   currentCollection: collectionShape,
   searchQuery: PropTypes.string
 };
 
 export default connect(state => ({
   bookmarks: getCurrentBookmarks(state),
-  bookmarksLoading: getBookmarksLoading(state),
-  bookmarksError: getBookmarksError(state),
   collections: getCollections(state),
-  collectionsLoading: getCollectionsLoading(state),
-  collectionsError: getCollectionsError(state),
   currentCollection: getCurrentCollection(state),
   searchQuery: getSearchQuery(state)
 }))(CSSModules(BookmarksPage, styles));

@@ -38,6 +38,7 @@ module.exports = {
     "no-unused-expressions": "warn",
     "no-useless-concat": "warn",
     "block-scoped-var": "error",
+    "no-debugger": 0,
     "import/no-extraneous-dependencies": 0,
     "react/jsx-tag-spacing": 0,
     "react/prefer-stateless-function": [1, { "ignorePureComponents": true }],
@@ -52,6 +53,7 @@ module.exports = {
     "react/require-default-props": 0,
     "prefer-destructuring": 0,
     "default-case": 0,
-    "no-extra-boolean-cast": 0
+    "no-extra-boolean-cast": 0,
+    "no-underscore-dangle": 0
   }
 };
