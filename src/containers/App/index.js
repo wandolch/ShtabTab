@@ -18,11 +18,17 @@ class App extends Component {
   }
 
   handleError(err) {
-    if (err.response && err.response.status === 401) {
+    if (!err.response) return;
+
+    switch (err.response.status) {
+    case 401:
       this.props.history.push('/info');
-    } else {
-      alert(err.message);
-      // TODO make toast
+      break;
+    case 404:
+      this.props.history.push('/not-found');
+      break;
+    default:
+      alert(err.message); // TODO make toast
     }
   }
 

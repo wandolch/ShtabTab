@@ -1,14 +1,11 @@
-function checkStatus(response) {
+async function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
-    return response;
+    return response.json();
   }
-  const error = new Error(response.message);
+  const errorResponse = await response.json();
+  const error = new Error(errorResponse.message);
   error.response = response;
   throw error;
-}
-
-function parseJSON(response) {
-  return response.json();
 }
 
 function getAuthHeader() {
@@ -30,7 +27,6 @@ export default class TransportService {
       method: 'GET',
       body: urlSearchParams
     }).then(checkStatus)
-      .then(parseJSON);
   }
 
   static post(url, data, isAbsolute) {
@@ -43,7 +39,6 @@ export default class TransportService {
       },
       body: JSON.stringify(data)
     }).then(checkStatus)
-      .then(parseJSON);
   }
 }
 

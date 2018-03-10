@@ -29,7 +29,7 @@ class BookmarksView extends Component {
       height: bookmarkSizes[this.props.item.frequency]
     };
     const bookmarkImageCss = {
-      backgroundImage: `url(${this.props.item.image})`,
+      backgroundImage: `url(${this.props.item.picture})`,
       height: bookmarkImageSizes[this.props.item.frequency]
     };
     const textBlockCss = {
