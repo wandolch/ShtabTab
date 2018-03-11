@@ -54,6 +54,7 @@ module.exports = {
     "prefer-destructuring": 0,
     "default-case": 0,
     "no-extra-boolean-cast": 0,
-    "no-underscore-dangle": 0
+    "no-underscore-dangle": 0,
+    "no-return-assign": [2, "except-parens"]
   }
 };

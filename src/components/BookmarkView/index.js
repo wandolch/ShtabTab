@@ -29,9 +29,11 @@ class BookmarksView extends Component {
       height: bookmarkSizes[this.props.item.frequency]
     };
     const bookmarkImageCss = {
-      backgroundImage: `url(${this.props.item.picture})`,
       height: bookmarkImageSizes[this.props.item.frequency]
     };
+    if (this.props.item.picture) {
+      bookmarkImageCss.backgroundImage = `url(${process.env.ORIGIN_URL + this.props.item.picture})`;
+    }
     const textBlockCss = {
       color: TransformService.getContrastColor(this.props.item.rgb),
       marginBottom: bookmarkPaddings[this.props.item.frequency]
@@ -45,7 +47,7 @@ class BookmarksView extends Component {
         styleName="bookmark-container">
         <div styleName="bookmark-text" style={textBlockCss}>
           <div>{this.props.item.title}</div>
-          <div styleName="bookmark-link-text">{TransformService.extractHostname(this.props.item.link)}</div>
+          <div styleName="bookmark-link-text">{this.props.item.hostName}</div>
         </div>
         <div
           styleName="bookmark-image-wrapper"

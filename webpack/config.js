@@ -3,7 +3,8 @@ const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const buildDevConfig = require('./dev');
 const buildProdConfig = require('./prod');
-const apiUrl = require('../environment');
+const apiUrl = require('../environment').apiUrl;
+const originUrl = require('../environment').originUrl;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const port = 5000;
@@ -91,7 +92,8 @@ const baseConfig = {
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        API_URL: JSON.stringify(apiUrl)
+        API_URL: JSON.stringify(apiUrl),
+        ORIGIN_URL: JSON.stringify(originUrl)
       }
     }),
     new CleanWebpackPlugin(['dist'])

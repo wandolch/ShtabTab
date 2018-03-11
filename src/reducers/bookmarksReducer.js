@@ -5,28 +5,34 @@ export default (state = bookmarksState, action) => {
   switch (action.type) {
   case actionTypes.FETCH_BOOKMARKS:
     return Object.assign({}, state, {
-      bookmarksLoading: true,
-      bookmarksError: false
+      bookmarksLoading: true
     });
 
   case actionTypes.FETCH_BOOKMARKS_SUCCESS:
     return Object.assign({}, state, {
       currentBookmarks: action.payload,
-      bookmarksLoading: false,
-      bookmarksError: false
+      bookmarksLoading: false
+    });
+
+  case actionTypes.FETCH_BOOKMARKS_ERROR:
+    return Object.assign({}, state, {
+      bookmarksLoading: false
     });
 
   case actionTypes.FETCH_COLLECTIONS:
     return Object.assign({}, state, {
-      collectionsLoading: true,
-      collectionsError: false
+      collectionsLoading: true
     });
 
   case actionTypes.FETCH_COLLECTIONS_SUCCESS:
     return Object.assign({}, state, {
       collections: action.payload,
-      collectionsLoading: false,
-      collectionsError: false
+      collectionsLoading: false
+    });
+
+  case actionTypes.FETCH_COLLECTIONS_ERROR:
+    return Object.assign({}, state, {
+      collectionsLoading: false
     });
 
   case actionTypes.SET_CURRENT_COLLECTION:
@@ -37,6 +43,22 @@ export default (state = bookmarksState, action) => {
   case actionTypes.SET_BOOKMARKS_SEARCH:
     return Object.assign({}, state, {
       searchQuery: action.payload.toLowerCase()
+    });
+
+  case actionTypes.ADD_BOOKMARK:
+    return Object.assign({}, state, {
+      addBookmarkLoading: true
+    });
+
+  case actionTypes.ADD_BOOKMARK_SUCCESS:
+    return Object.assign({}, state, {
+      currentBookmarks: [...state.currentBookmarks, action.payload],
+      addBookmarkLoading: false
+    });
+
+  case actionTypes.ADD_BOOKMARK_ERROR:
+    return Object.assign({}, state, {
+      addBookmarkLoading: false
     });
 
   default:

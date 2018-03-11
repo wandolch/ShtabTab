@@ -9,4 +9,8 @@ export default class BookmarksRepository {
   static fetchCollections() {
     return TransportService.get(apiRoutes.collectionUrl);
   }
+
+  static addBookmark({ collectionId, bookmark }) {
+    return TransportService.post(`${apiRoutes.collectionUrl}/${collectionId}/${apiRoutes.bookmarkUrl}`, bookmark);
+  }
 }

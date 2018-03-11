@@ -14,6 +14,12 @@ export function signInSuccess(user) {
   };
 }
 
+export function signInError() {
+  return {
+    type: actionTypes.SIGN_IN_ERROR
+  };
+}
+
 export function applicationError(error) {
   return {
     type: actionTypes.APP_ERROR,

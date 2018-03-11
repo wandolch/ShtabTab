@@ -5,15 +5,18 @@ export default (state = commonState, action) => {
   switch (action.type) {
   case actionTypes.SIGN_IN:
     return Object.assign({}, state, {
-      signInLoading: true,
-      signInError: false
+      signInLoading: true
     });
 
   case actionTypes.SIGN_IN_SUCCESS:
     return Object.assign({}, state, {
       user: action.payload,
-      signInLoading: false,
-      signInError: false
+      signInLoading: false
+    });
+
+  case actionTypes.SIGN_IN_ERROR:
+    return Object.assign({}, state, {
+      signInLoading: false
     });
 
   case actionTypes.APP_ERROR:

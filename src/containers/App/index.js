@@ -52,7 +52,8 @@ class App extends Component {
 
 App.propTypes = {
   appErr: PropTypes.object,
-  history: PropTypes.object
+  history: PropTypes.object,
+  dispatch: PropTypes.func
 };
 
 export default withRouter(connect(state => ({

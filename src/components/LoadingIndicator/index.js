@@ -4,11 +4,9 @@ import styles from './index.css';
 
 const LoadingIndicator = () => (
   <div styleName="showbox">
-    <div styleName="loader">
-      <svg styleName="circular" viewBox="25 25 50 50">
-        <circle styleName="path" cx="50" cy="50" r="20" fill="none" strokeWidth="2" strokeMiterlimit="10"/>
-      </svg>
-    </div>
+    <svg styleName="spinner" width="200px" height="200px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+      <circle styleName="path" fill="none" strokeWidth="3" strokeLinecap="round" cx="33" cy="33" r="30" />
+    </svg>
   </div>
 );
 

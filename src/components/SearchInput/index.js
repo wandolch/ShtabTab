@@ -11,10 +11,6 @@ class SearchInput extends Component {
     };
   }
 
-  componentDidMount() {
-    this.searchInput.focus();
-  }
-
   dataSearch = (event) => {
     this.setState({ term: event.target.value });
     this.props.onSearch(event.target.value);
@@ -24,9 +20,9 @@ class SearchInput extends Component {
     return (
       <div>
         <input
-          ref={(input) => { this.searchInput = input; }}
           value={this.state.term}
           type="text"
+          autoFocus
           styleName="input"
           placeholder="Search"
           onChange={this.dataSearch}/>

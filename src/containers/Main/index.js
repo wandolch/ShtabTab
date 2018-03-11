@@ -47,10 +47,10 @@ class Main extends Component {
 }
 
 Main.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  bookmarksLoading: PropTypes.bool.isRequired,
+  dispatch: PropTypes.func,
+  bookmarksLoading: PropTypes.bool,
   collections: PropTypes.arrayOf(collectionShape),
-  collectionsLoading: PropTypes.bool.isRequired,
+  collectionsLoading: PropTypes.bool,
   history: PropTypes.object,
   location: PropTypes.object
 };
