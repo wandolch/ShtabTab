@@ -64,6 +64,10 @@ class BookmarksPage extends Component {
     this.setState({ newBookmarkLink: event.target.value.replace(/(\r\n\t|\n|\r\t)/gm, '') });
   };
 
+  onDelete= (id) => {
+
+  };
+
   setCurrentCollections(collections) {
     const currentCollection = collections.find(collection => collection.id === this.props.match.params.id);
     this.props.dispatch(setCurrentCollection(currentCollection));
@@ -143,7 +147,7 @@ class BookmarksPage extends Component {
               transitionEnterTimeout={300}
               transitionLeaveTimeout={300}
               transitionName={styles}>
-              {bm.map(item => (<BookmarksView item={item} key={item.id}/>))}
+              {bm.map(item => (<BookmarksView item={item} onDelete={this.onDelete} key={item.id}/>))}
             </CSSTransitionGroup>
             {this.checkBookmarksEmpty()}
           </div>

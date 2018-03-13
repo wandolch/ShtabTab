@@ -3,6 +3,7 @@ import CSSModules from 'react-css-modules';
 import styles from './index.css';
 import TransformService from '../../services/TransformService';
 import { bookmarkShape } from '../../model/bookmarkShape';
+import PropTypes from 'prop-types';
 
 const bookmarkSizes = {
   0: '8.94vh',
@@ -23,6 +24,10 @@ const bookmarkImageSizes = {
 };
 
 class BookmarksView extends Component {
+  deleteHandle = () => {
+    this.props.onDelete(this.props.item.id);
+  };
+
   render() {
     const bookmarkWrapperCss = {
       backgroundColor: `rgb(${this.props.item.rgb})`,
@@ -40,25 +45,35 @@ class BookmarksView extends Component {
     };
 
     return (
-      <a
-        href={this.props.item.link}
-        target="_blank"
-        style={bookmarkWrapperCss}
-        styleName="bookmark-container">
-        <div styleName="bookmark-text" style={textBlockCss}>
-          <div>{this.props.item.title}</div>
-          <div styleName="bookmark-link-text">{this.props.item.hostName}</div>
+      <div styleName="bookmark-container">
+        <div styleName="delete-icon-wrapper">
+          <div
+            onClick={this.deleteHandle}
+            styleName="delete-icon">
+            <i className="material-icons">clear</i>
+          </div>
         </div>
-        <div
-          styleName="bookmark-image-wrapper"
-          style={bookmarkImageCss} />
-      </a>
+        <a
+          href={this.props.item.link}
+          target="_blank"
+          style={bookmarkWrapperCss}
+          styleName="bookmark-link">
+          <div styleName="bookmark-text" style={textBlockCss}>
+            <div>{this.props.item.title}</div>
+            <div styleName="bookmark-link-text">{this.props.item.hostName}</div>
+          </div>
+          <div
+            styleName="bookmark-image-wrapper"
+            style={bookmarkImageCss} />
+        </a>
+      </div>
     );
   }
 }
 
 BookmarksView.propTypes = {
-  item: bookmarkShape
+  item: bookmarkShape,
+  onDelete: PropTypes.func
 };
 
 export default CSSModules(BookmarksView, styles);

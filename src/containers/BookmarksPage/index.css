@@ -20,7 +20,7 @@
   .bookmarks-container {
     width:calc(100% - $menuWidth);
     height: 100%;
-    padding: 3.97vh 25px 0;
+    padding: 3.97vh 25px 3.97vh;
     overflow-y: auto;
     overflow-x: hidden;
 
@@ -156,9 +156,6 @@
     .add-bookmark-input{
       display: inline-block;
     }
-  }
-  &:active{
-    opacity: 0.9;
   }
 }
 

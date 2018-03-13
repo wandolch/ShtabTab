@@ -1,47 +1,84 @@
 @import "../../style/variables.css";
 
 .bookmark-container {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: flex-end;
-  border-radius: 10px;
-  text-decoration: none;
-  box-shadow: 0 15px 50px -30px rgba(0, 0, 0, .75);
-  object-fit: cover;
-  overflow: hidden;
-  position: relative;
-  z-index: 10;
-  margin-bottom: 1.5vh;
-  transition: filter 0.4s easeOutSine;
-
-  .bookmark-text {
-    max-width: 50%;
-    white-space: nowrap;
+  .bookmark-link {
+    clear: both;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: flex-end;
+    border-radius: 10px;
+    text-decoration: none;
+    box-shadow: 0 15px 50px -30px rgba(0, 0, 0, .75);
+    object-fit: cover;
     overflow: hidden;
-    margin-right: 50px;
-    margin-left: 25px;
-    margin-bottom: 1vh;
-    font-size: 3.7vh;
+    position: relative;
+    z-index: 10;
+    margin-bottom: 1.5vh;
+    transition: filter 0.4s easeOutSine;
 
-    .bookmark-link-text {
-      font-size: 0.55em;
+    .bookmark-text {
+      max-width: 50%;
+      white-space: nowrap;
+      overflow: hidden;
+      margin-right: 50px;
+      margin-left: 25px;
+      margin-bottom: 1vh;
+      font-size: 3.7vh;
+
+      .bookmark-link-text {
+        font-size: 0.55em;
+      }
+    }
+
+    .bookmark-image-wrapper {
+      background-size: cover;
+      background: no-repeat top left;
+      max-width: 70%;
+      flex-grow: 1;
+      flex-shrink: 2;
+      border-bottom-right-radius: 9px;
+      transition: 0.7s easeOutQuad;
+    }
+
+    &:hover {
+      .bookmark-image-wrapper {
+        transform: scale(1.02);
+      }
     }
   }
 
-  .bookmark-image-wrapper {
-    background-size: cover;
-    background: no-repeat top left;
-    max-width: 70%;
-    flex-grow: 1;
-    flex-shrink: 2;
-    border-bottom-right-radius: 9px;
-    transition: 0.7s easeOutQuad;
+  .delete-icon-wrapper{
+    height: 0;
+    width: 0;
+    position: relative;
+    z-index: 100;
+    float: right;
+    margin-right: 20px;
+
+    .delete-icon{
+      opacity: 0;
+      background-color: black;
+      border-radius: 3px 10px 3px 3px;
+      transition: opacity 0.2s;
+      cursor: pointer;
+      height: 2vh;
+      width: 2vh;
+
+      i{
+        color: white;
+        font-size: 2vh;
+      }
+
+      &:hover{
+        opacity: 1 !important;
+      }
+    }
   }
 
-  &:hover {
-    .bookmark-image-wrapper {
-      transform: scale(1.02);
+  &:hover{
+    .delete-icon {
+      opacity: 0.6;
     }
   }
 }
