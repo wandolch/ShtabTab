@@ -57,6 +57,7 @@ module.exports = {
     "no-underscore-dangle": 0,
     "no-return-assign": [2, "except-parens"],
     "jsx-a11y/no-static-element-interactions": 0,
-    "jsx-a11y/click-events-have-key-events": 0
+    "jsx-a11y/click-events-have-key-events": 0,
+    "jsx-a11y/no-autofocus": 0
   }
 };

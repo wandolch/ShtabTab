@@ -73,3 +73,23 @@ export function addBookmarkError() {
   };
 }
 
+export function delBookmark(id) {
+  return {
+    type: actionTypes.DEL_BOOKMARK,
+    payload: id
+  };
+}
+
+export function delBookmarkSuccess(bookmarks) {
+  return {
+    type: actionTypes.DEL_BOOKMARK_SUCCESS,
+    payload: bookmarks
+  };
+}
+
+export function delBookmarkError() {
+  return {
+    type: actionTypes.DEL_BOOKMARK_ERROR
+  };
+}
+

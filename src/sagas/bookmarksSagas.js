@@ -5,7 +5,7 @@ import {
   addBookmarkError,
   addBookmarkSuccess,
   bookmarksFetched, bookmarksFetchingError, collectionsFetched,
-  collectionsFetchingError
+  collectionsFetchingError, delBookmarkError, delBookmarkSuccess
 } from '../actions/bookmarksActions';
 import { applicationError } from '../actions/commonActions';
 
@@ -49,4 +49,18 @@ function* addBookmark(action) {
 
 export function* addBookmarkSaga() {
   yield takeLatest(actionTypes.ADD_BOOKMARK, addBookmark);
+}
+
+function* deleteBookmark(action) {
+  try {
+    const res = yield call(BookmarksRepository.deleteBookmark, action.payload);
+    yield put(delBookmarkSuccess(res));
+  } catch (e) {
+    yield put(delBookmarkError());
+    yield put(applicationError(e));
+  }
+}
+
+export function* deleteBookmarkSaga() {
+  yield takeLatest(actionTypes.DEL_BOOKMARK, deleteBookmark);
 }

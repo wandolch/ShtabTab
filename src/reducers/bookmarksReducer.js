@@ -61,6 +61,22 @@ export default (state = bookmarksState, action) => {
       addBookmarkLoading: false
     });
 
+  case actionTypes.DEL_BOOKMARK:
+    return Object.assign({}, state, {
+      delBookmarkLoading: true
+    });
+
+  case actionTypes.DEL_BOOKMARK_SUCCESS:
+    return Object.assign({}, state, {
+      currentBookmarks: action.payload,
+      delBookmarkLoading: false
+    });
+
+  case actionTypes.DEL_BOOKMARK_ERROR:
+    return Object.assign({}, state, {
+      delBookmarkLoading: false
+    });
+
   default:
     return state;
   }

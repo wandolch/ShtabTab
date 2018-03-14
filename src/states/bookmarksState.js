@@ -7,7 +7,8 @@ export const bookmarksState = {
   currentCollection: null,
   collectionsLoading: false,
   searchQuery: '',
-  addBookmarkLoading: false
+  addBookmarkLoading: false,
+  delBookmarkLoading: false
 };
 
 const getBookmarksState = state => state.bookmarks;
@@ -27,4 +28,5 @@ export const getCurrentCollection = createSelector([getBookmarksState], state =>
 export const getCollectionsLoading = createSelector([getBookmarksState], state => state.collectionsLoading);
 export const getSearchQuery = createSelector([getBookmarksState], state => state.searchQuery);
 export const getAddBookmarkLoading = createSelector([getBookmarksState], state => state.addBookmarkLoading);
+export const getDelBookmarkLoading = createSelector([getBookmarksState], state => state.delBookmarkLoading);
 

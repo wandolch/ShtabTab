@@ -26,7 +26,7 @@ export default class TransportService {
       },
       method: 'GET',
       body: urlSearchParams
-    }).then(checkStatus)
+    }).then(checkStatus);
   }
 
   static post(url, data, isAbsolute) {
@@ -38,7 +38,18 @@ export default class TransportService {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
-    }).then(checkStatus)
+    }).then(checkStatus);
+  }
+
+  static del(url, urlSearchParams, isAbsolute) {
+    if (!isAbsolute) { url = process.env.API_URL + url; }
+    return fetch(url, {
+      headers: {
+        Authorization: getAuthHeader()
+      },
+      method: 'DELETE',
+      body: urlSearchParams
+    }).then(checkStatus);
   }
 }
 

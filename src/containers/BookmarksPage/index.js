@@ -11,7 +11,7 @@ import {
 } from '../../states/bookmarksState';
 import {
   fetchCollections, fetchBookmarks, setBookmarksSearch,
-  setCurrentCollection, addBookmark
+  setCurrentCollection, addBookmark, delBookmark
 } from '../../actions/bookmarksActions';
 import { bookmarkShape } from '../../model/bookmarkShape';
 import { collectionShape } from '../../model/collectionShape';
@@ -65,7 +65,7 @@ class BookmarksPage extends Component {
   };
 
   onDelete= (id) => {
-
+    this.props.dispatch(delBookmark(id));
   };
 
   setCurrentCollections(collections) {

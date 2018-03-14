@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import CSSModules from 'react-css-modules';
+import PropTypes from 'prop-types';
 import styles from './index.css';
 import TransformService from '../../services/TransformService';
 import { bookmarkShape } from '../../model/bookmarkShape';
-import PropTypes from 'prop-types';
 
 const bookmarkSizes = {
   0: '8.94vh',
@@ -37,7 +37,7 @@ class BookmarksView extends Component {
       height: bookmarkImageSizes[this.props.item.frequency]
     };
     if (this.props.item.picture) {
-      bookmarkImageCss.backgroundImage = `url(${process.env.ORIGIN_URL + this.props.item.picture})`;
+      bookmarkImageCss.backgroundImage = `url(data:image/gif;base64,${this.props.item.picture})`;
     }
     const textBlockCss = {
       color: TransformService.getContrastColor(this.props.item.rgb),

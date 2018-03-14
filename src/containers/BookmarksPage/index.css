@@ -100,12 +100,15 @@
   color: white;
   opacity: 0.5;
   border-radius: 100%;
+  transform: perspective(1px) translateZ(0);
+  backface-visibility: hidden;
 
   right: -80px;
   bottom: -80px;
 
 
   .add-bookmark-input{
+    font-family: 'Arial', 'Helvetica', 'sans-serif';
     position: absolute;
     transform: rotate(180deg);
     margin: 45px 85px;

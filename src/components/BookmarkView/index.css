@@ -52,33 +52,43 @@
     height: 0;
     width: 0;
     position: relative;
+    bottom: 5px;
+    left: 5px;
     z-index: 100;
     float: right;
     margin-right: 20px;
 
     .delete-icon{
+      box-shadow: rgba(0, 0, 0, 0.75) 0 1px 1px 0;
       opacity: 0;
-      background-color: black;
-      border-radius: 3px 10px 3px 3px;
+      background-color: #e53935;
+      border-radius: 100%;
       transition: opacity 0.2s;
       cursor: pointer;
-      height: 2vh;
-      width: 2vh;
+      height: 20px;
+      width: 20px;
+      text-align: center;
 
       i{
         color: white;
-        font-size: 2vh;
+        font-size: 15px;
+        margin-top: 2px;
       }
 
       &:hover{
-        opacity: 1 !important;
+        background-color: #b71c1c;
+        opacity: 1;
+      }
+
+      &:active{
+        background-color: #841616;
       }
     }
   }
 
   &:hover{
     .delete-icon {
-      opacity: 0.6;
+      opacity: 0.9;
     }
   }
 }
