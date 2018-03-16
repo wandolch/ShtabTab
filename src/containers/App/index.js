@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import CSSModules from 'react-css-modules';
 import PropTypes from 'prop-types';
+import { ToastContainer, toast } from 'react-toastify';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import createPageLoadable from '../../utils/pageLoadable';
@@ -28,13 +29,23 @@ class App extends Component {
       this.props.history.push('/not-found');
       break;
     default:
-      alert(err.message); // TODO make toast
+      if (process.env.NODE_ENV !== 'production') {
+        console.error(err.message);
+      }
+      toast.error('Oop, something went wrong!', {
+        position: toast.POSITION.TOP_RIGHT,
+        className: {
+          borderRadius: '10px'
+        },
+        hideProgressBar: true
+      });
     }
   }
 
   render() {
     return (
       <div styleName="app-wrapper">
+        <ToastContainer autoClose={3000} />
         <Helmet
           titleTemplate="%s - ShtabTab"
           defaultTitle="ShtabTab">
@@ -52,8 +63,7 @@ class App extends Component {
 
 App.propTypes = {
   appErr: PropTypes.object,
-  history: PropTypes.object,
-  dispatch: PropTypes.func
+  history: PropTypes.object
 };
 
 export default withRouter(connect(state => ({

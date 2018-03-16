@@ -23,7 +23,7 @@ const bookmarkImageSizes = {
   2: '14.41vh'
 };
 
-class BookmarksView extends Component {
+class BookmarkView extends Component {
   deleteHandle = () => {
     this.props.onDelete(this.props.item.id);
   };
@@ -71,9 +71,9 @@ class BookmarksView extends Component {
   }
 }
 
-BookmarksView.propTypes = {
+BookmarkView.propTypes = {
   item: bookmarkShape,
   onDelete: PropTypes.func
 };
 
-export default CSSModules(BookmarksView, styles);
+export default CSSModules(BookmarkView, styles);

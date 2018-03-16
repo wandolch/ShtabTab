@@ -15,7 +15,8 @@ import {
 } from '../../actions/bookmarksActions';
 import { bookmarkShape } from '../../model/bookmarkShape';
 import { collectionShape } from '../../model/collectionShape';
-import BookmarksView from '../../components/BookmarkView/index';
+import BookmarkView from '../../components/BookmarkView/index';
+import CollectionView from '../../components/CollectionView/index';
 import SearchInput from '../../components/SearchInput/index';
 
 class BookmarksPage extends Component {
@@ -24,7 +25,8 @@ class BookmarksPage extends Component {
     this.state = {
       newBookmarkLink: '',
       loadingDots: '',
-      dotsInterval: null
+      dotsInterval: null,
+      user: JSON.parse(localStorage.getItem('st-user'))
     };
   }
 
@@ -32,24 +34,23 @@ class BookmarksPage extends Component {
     if (!this.props.collections) {
       this.props.dispatch(fetchCollections());
     } else {
-      this.setCurrentCollections(this.props.collections);
+      this.setCurrentCollections(this.props.match.params.id, this.props.collections);
     }
     this.props.dispatch(fetchBookmarks(this.props.match.params.id));
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.collections !== this.props.collections) {
-      this.setCurrentCollections(nextProps.collections);
+    if (nextProps.match.params.id !== this.props.match.params.id) {
+      this.setCurrentCollections(nextProps.match.params.id, nextProps.collections);
+      this.props.dispatch(fetchBookmarks(nextProps.match.params.id));
+    }
+
+    if (nextProps.collections && (nextProps.collections !== this.props.collections)) {
+      this.setCurrentCollections(this.props.match.params.id, nextProps.collections);
     }
 
     if (nextProps.addBookmarkLoading === true && this.props.addBookmarkLoading === false) {
-      const dotsInterval = window.setInterval(() => {
-        if (this.state.loadingDots.length > 2) {
-          this.setState({ loadingDots: '' });
-        } else {
-          this.setState(prevProps => ({ loadingDots: (prevProps.loadingDots += '.') }));
-        }
-      }, 500);
+      const dotsInterval = this.startLoadingDots();
       this.setState({ dotsInterval });
     } else if (nextProps.addBookmarkLoading === false && this.props.addBookmarkLoading === true) {
       clearInterval(this.state.dotsInterval);
@@ -68,13 +69,24 @@ class BookmarksPage extends Component {
     this.props.dispatch(delBookmark(id));
   };
 
-  setCurrentCollections(collections) {
-    const currentCollection = collections.find(collection => collection.id === this.props.match.params.id);
+  setCurrentCollections(id, collections) {
+    const currentCollection = collections
+      .find(collection => collection.id === id);
     this.props.dispatch(setCurrentCollection(currentCollection));
   }
 
   getCurrentCollectionTitle() {
     return this.props.currentCollection ? this.props.currentCollection.title : '';
+  }
+
+  startLoadingDots() {
+    return window.setInterval(() => {
+      if (this.state.loadingDots.length > 2) {
+        this.setState({ loadingDots: '' });
+      } else {
+        this.setState(prevProps => ({ loadingDots: (prevProps.loadingDots += '.') }));
+      }
+    }, 500);
   }
 
   checkBookmarksEmpty = () => {
@@ -86,13 +98,25 @@ class BookmarksPage extends Component {
     }
   };
 
-  showCollections() {
-    const col = this.props.collections;
-    if (col) {
+  showMenuSide() {
+    const collections = this.props.collections;
+    if (collections) {
       return (
-        <div>
-          {col.map(item => (<div key={item.id}>{item.title}</div>))}
-        </div>
+        <section styleName="menu-container">
+          <div styleName="collections-container">
+            {collections.map(item => (<CollectionView
+              isActive={this.props.match.params.id === item.id}
+              item={item}
+              key={item.id}/>))}
+          </div>
+          <div styleName="account-info-container">
+            <img styleName="avatar" src={this.state.user.picture} alt="avatar"/>
+            <div styleName="account-info-block">
+              <div styleName="user-name">{this.state.user.givenName}</div>
+              <div styleName="logout">logout</div>
+            </div>
+          </div>
+        </section>
       );
     }
   }
@@ -135,7 +159,7 @@ class BookmarksPage extends Component {
     const bm = this.props.bookmarks;
     if (bm) {
       return (
-        <div>
+        <section styleName="bookmarks-container">
           <div styleName="bookmarks-header">
             <h1 styleName="collection-title">{this.getCurrentCollectionTitle()}</h1>
             <SearchInput onSearch={this.onSearch} />
@@ -147,7 +171,7 @@ class BookmarksPage extends Component {
               transitionEnterTimeout={300}
               transitionLeaveTimeout={300}
               transitionName={styles}>
-              {bm.map(item => (<BookmarksView item={item} onDelete={this.onDelete} key={item.id}/>))}
+              {bm.map(item => (<BookmarkView item={item} onDelete={this.onDelete} key={item.id}/>))}
             </CSSTransitionGroup>
             {this.checkBookmarksEmpty()}
           </div>
@@ -155,7 +179,7 @@ class BookmarksPage extends Component {
           <div styleName="fixed-action-btn">
             {this.showAddBookmarkInput()}
           </div>
-        </div>
+        </section>
       );
     }
   }
@@ -166,14 +190,10 @@ class BookmarksPage extends Component {
         <Helmet>
           <title>{this.getCurrentCollectionTitle()}</title>
         </Helmet>
-        <section styleName="bookmarks-page">
-          <div styleName="menu-container">
-            {this.showCollections()}
-          </div>
-          <div styleName="bookmarks-container">
-            {this.showBookmarksSide()}
-          </div>
-        </section>
+        <main styleName="bookmarks-page">
+          {this.showMenuSide()}
+          {this.showBookmarksSide()}
+        </main>
       </div>
     );
   }
@@ -186,7 +206,7 @@ BookmarksPage.propTypes = {
   collections: PropTypes.arrayOf(collectionShape),
   currentCollection: collectionShape,
   searchQuery: PropTypes.string,
-  addBookmarkLoading: PropTypes.bool
+  addBookmarkLoading: PropTypes.bool,
 };
 
 export default connect(state => ({
@@ -194,5 +214,5 @@ export default connect(state => ({
   collections: getCollections(state),
   currentCollection: getCurrentCollection(state),
   searchQuery: getSearchQuery(state),
-  addBookmarkLoading: getAddBookmarkLoading(state)
+  addBookmarkLoading: getAddBookmarkLoading(state),
 }))(CSSModules(BookmarksPage, styles));

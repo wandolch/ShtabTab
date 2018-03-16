@@ -8,7 +8,7 @@ export default (state = commonState, action) => {
       signInLoading: true
     });
 
-  case actionTypes.SIGN_IN_SUCCESS:
+  case actionTypes.SET_USER:
     return Object.assign({}, state, {
       user: action.payload,
       signInLoading: false

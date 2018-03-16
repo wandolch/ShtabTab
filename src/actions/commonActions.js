@@ -7,9 +7,9 @@ export function doSignIn(token) {
   };
 }
 
-export function signInSuccess(user) {
+export function setUser(user) {
   return {
-    type: actionTypes.SIGN_IN_SUCCESS,
+    type: actionTypes.SET_USER,
     payload: user
   };
 }
