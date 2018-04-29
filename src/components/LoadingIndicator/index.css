@@ -7,6 +7,10 @@ $yellow: #ffa700;
 $white: #eee;
 $circleWidth: 100px;
 
+.hidden{
+  display: none;
+}
+
 .showbox {
   position: absolute;
   top: 0;

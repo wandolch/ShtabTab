@@ -3,7 +3,7 @@ import BookmarksRepository from '../repositories/BookmarksRepository';
 import { actionTypes } from '../constants/actionTypes';
 import {
   addBookmarkError,
-  addBookmarkSuccess,
+  addBookmarkSuccess, addCollectionError, addCollectionSuccess,
   bookmarksFetched, bookmarksFetchingError, collectionsFetched,
   collectionsFetchingError, delBookmarkError, delBookmarkSuccess
 } from '../actions/bookmarksActions';
@@ -63,4 +63,18 @@ function* deleteBookmark(action) {
 
 export function* deleteBookmarkSaga() {
   yield takeLatest(actionTypes.DEL_BOOKMARK, deleteBookmark);
+}
+
+function* addCollection(action) {
+  try {
+    const res = yield call(BookmarksRepository.addCollection, action.payload);
+    yield put(addCollectionSuccess(res));
+  } catch (e) {
+    yield put(addCollectionError());
+    yield put(applicationError(e));
+  }
+}
+
+export function* addCollectionSaga() {
+  yield takeLatest(actionTypes.ADD_COLLECTION, addCollection);
 }

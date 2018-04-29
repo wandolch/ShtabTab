@@ -93,3 +93,23 @@ export function delBookmarkError() {
   };
 }
 
+export function addCollection(title) {
+  return {
+    type: actionTypes.ADD_COLLECTION,
+    payload: title
+  };
+}
+
+export function addCollectionSuccess(collection) {
+  return {
+    type: actionTypes.ADD_COLLECTION_SUCCESS,
+    payload: collection
+  };
+}
+
+export function addCollectionError() {
+  return {
+    type: actionTypes.ADD_COLLECTION_ERROR
+  };
+}
+

@@ -1,0 +1,59 @@
+@import "../../style/variables.css";
+@import "../../style/mixins.css";
+
+.modal-container{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  .modal-window{
+    cursor: default;
+    min-height: 300px;
+    width: 380px;
+    @mixin defaultGradient;
+    padding: 20px;
+    box-shadow: 0 19px 36px -15px rgba(0,0,0,0.75);
+
+    .modal-window-header{
+      display: flex;
+      justify-content: space-between;
+      color: white;
+
+      .title{
+        margin: 0;
+      }
+
+      .close-modal{
+        cursor: pointer;
+        margin-left: 10px;
+      }
+    }
+
+    .modal-window-body{
+      font-size: 18px;
+      color: white;
+
+      input{
+        padding: 10px 0;
+        font-size: 18px;
+        outline: none;
+        width: 100%;
+        color:white;
+        border: none;
+        border-bottom: 1px solid white;
+
+        &::placeholder {
+          color: rgba(255,255,255,0.6);;
+        }
+      }
+    }
+  }
+}

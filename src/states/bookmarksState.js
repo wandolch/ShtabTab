@@ -8,7 +8,8 @@ export const bookmarksState = {
   collectionsLoading: false,
   searchQuery: '',
   addBookmarkLoading: false,
-  delBookmarkLoading: false
+  delBookmarkLoading: false,
+  addCollectionLoading: false
 };
 
 const getBookmarksState = state => state.bookmarks;
@@ -29,4 +30,5 @@ export const getCollectionsLoading = createSelector([getBookmarksState], state =
 export const getSearchQuery = createSelector([getBookmarksState], state => state.searchQuery);
 export const getAddBookmarkLoading = createSelector([getBookmarksState], state => state.addBookmarkLoading);
 export const getDelBookmarkLoading = createSelector([getBookmarksState], state => state.delBookmarkLoading);
+export const getAddCollectionLoading = createSelector([getBookmarksState], state => state.addCollectionLoading);
 

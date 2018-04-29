@@ -7,26 +7,30 @@ import CSSModules from 'react-css-modules';
 import styles from './index.css';
 import {
   getCollections, getCurrentBookmarks, getCurrentCollection,
-  getSearchQuery, getAddBookmarkLoading
+  getSearchQuery, getAddBookmarkLoading, getBookmarksLoading
 } from '../../states/bookmarksState';
 import {
   fetchCollections, fetchBookmarks, setBookmarksSearch,
-  setCurrentCollection, addBookmark, delBookmark
+  setCurrentCollection, addBookmark, delBookmark, addCollection
 } from '../../actions/bookmarksActions';
 import { bookmarkShape } from '../../model/bookmarkShape';
 import { collectionShape } from '../../model/collectionShape';
 import BookmarkView from '../../components/BookmarkView/index';
 import CollectionView from '../../components/CollectionView/index';
 import SearchInput from '../../components/SearchInput/index';
+import Modal from '../../components/Modal/index';
 
 class BookmarksPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       newBookmarkLink: '',
+      newCollection: '',
+      userToShare: '',
       loadingDots: '',
       dotsInterval: null,
-      user: JSON.parse(localStorage.getItem('st-user'))
+      user: JSON.parse(localStorage.getItem('st-user')),
+      isShowingShareModal: false
     };
   }
 
@@ -61,22 +65,39 @@ class BookmarksPage extends Component {
     this.props.dispatch(setBookmarksSearch(query));
   };
 
-  onLinkChange= (event) => {
+  onLinkChange = (event) => {
     this.setState({ newBookmarkLink: event.target.value.replace(/(\r\n\t|\n|\r\t)/gm, '') });
+  };
+
+  onNewCollectionChange = (event) => {
+    this.setState({ newCollection: event.target.value });
+  };
+
+  onShareInputChange = (event) => {
+    this.setState({ userToShare: event.target.value });
   };
 
   onDelete= (id) => {
     this.props.dispatch(delBookmark(id));
   };
 
+  onLogout = () => {
+    localStorage.removeItem('st-user');
+    this.props.history.push('/info');
+  };
+
+  onCollectionShare = (id) => {
+    this.setState({ isShowingShareModal: true });
+  };
+
+  getCurrentCollectionTitle() {
+    return this.props.currentCollection ? this.props.currentCollection.title : '';
+  }
+
   setCurrentCollections(id, collections) {
     const currentCollection = collections
       .find(collection => collection.id === id);
     this.props.dispatch(setCurrentCollection(currentCollection));
-  }
-
-  getCurrentCollectionTitle() {
-    return this.props.currentCollection ? this.props.currentCollection.title : '';
   }
 
   startLoadingDots() {
@@ -94,40 +115,34 @@ class BookmarksPage extends Component {
       if (!!this.props.searchQuery.length) {
         return (<div styleName="nothing-found">No bookmarks found for your query «<b>{this.props.searchQuery}</b>»</div>);
       }
-      return (<div styleName="no-content">No bookmarks</div>);
+      if (!this.props.bookmarksLoading) {
+        return (<div styleName="no-content">No bookmarks</div>);
+      }
     }
   };
 
-  showMenuSide() {
-    const collections = this.props.collections;
-    if (collections) {
-      return (
-        <section styleName="menu-container">
-          <div styleName="collections-container">
-            {collections.map(item => (<CollectionView
-              isActive={this.props.match.params.id === item.id}
-              item={item}
-              key={item.id}/>))}
-          </div>
-          <div styleName="account-info-container">
-            <img styleName="avatar" src={this.state.user.picture} alt="avatar"/>
-            <div styleName="account-info-block">
-              <div styleName="user-name">{this.state.user.givenName}</div>
-              <div styleName="logout">logout</div>
-            </div>
-          </div>
-        </section>
-      );
+  handleAddCollectionPress = (event) => {
+    if (event.key === 'Enter' && this.state.newCollection) {
+      this.props.dispatch(addCollection(this.state.newCollection));
+      this.setState({ newCollection: '' });
     }
-  }
+  };
 
-  handleAddPress = (event) => {
+  handleAddBookmarkPress = (event) => {
     if (event.key === 'Enter' && this.state.newBookmarkLink) {
       this.props.dispatch(addBookmark({
         collectionId: this.props.match.params.id,
         bookmark: { link: this.state.newBookmarkLink }
       }));
       this.setState({ newBookmarkLink: '' });
+    }
+  };
+
+  handleShareInputPress = (event) => {
+    if (event.key === 'Enter' && this.state.userToShare) {
+      // dispatch
+      this.setState({ userToShare: '' });
+      // this.closeShareModal();
     }
   };
 
@@ -145,7 +160,7 @@ class BookmarksPage extends Component {
         <textarea
           value={this.state.newBookmarkLink}
           onChange={this.onLinkChange}
-          onKeyPress={this.handleAddPress}
+          onKeyPress={this.handleAddBookmarkPress}
           placeholder="place your link here and press enter"
           spellCheck="false"
           styleName="add-bookmark-input"
@@ -155,9 +170,46 @@ class BookmarksPage extends Component {
     );
   };
 
+  showMenuSide() {
+    const collections = this.props.collections;
+    if (collections) {
+      return (
+        <section styleName="menu-container">
+          <div styleName="top-part">
+            <div styleName="collections-container">
+              {collections.map(item => (<CollectionView
+                isActive={this.props.match.params.id === item.id}
+                item={item}
+                onCollectionShare={this.onCollectionShare}
+                key={item.id}/>))}
+            </div>
+            <div styleName="add-collection">
+              <input
+                value={this.state.newCollection}
+                onChange={this.onNewCollectionChange}
+                onKeyPress={this.handleAddCollectionPress}
+                styleName="add-collection-input"
+                type="text"
+                placeholder="New collection"/>
+            </div>
+          </div>
+          <div styleName="bottom-part">
+            <div styleName="account-info-container">
+              <img styleName="avatar" src={this.state.user.picture} alt="avatar"/>
+              <div styleName="account-info-block">
+                <div styleName="user-name">{this.state.user.givenName}</div>
+                <div onClick={this.onLogout} styleName="logout">logout</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      );
+    }
+  }
+
   showBookmarksSide() {
     const bm = this.props.bookmarks;
-    if (bm) {
+    if (bm && !this.props.bookmarksLoading) {
       return (
         <section styleName="bookmarks-container">
           <div styleName="bookmarks-header">
@@ -184,6 +236,27 @@ class BookmarksPage extends Component {
     }
   }
 
+  closeShareModal = () => {
+    this.setState({ isShowingShareModal: false });
+  };
+
+  displayShareModal() {
+    return (
+      <Modal
+        title="Share collection"
+        hidden={this.state.isShowingShareModal}
+        onClose={this.closeShareModal}>
+        <p>Please enter email of the person you want to share</p>
+        <input
+          value={this.state.userToShare}
+          onChange={this.onShareInputChange}
+          onKeyPress={this.handleShareInputPress}
+          type="email"
+          placeholder="Email"/>
+      </Modal>
+    );
+  }
+
   render() {
     return (
       <div styleName="bookmarks-page-wrapper">
@@ -194,6 +267,7 @@ class BookmarksPage extends Component {
           {this.showMenuSide()}
           {this.showBookmarksSide()}
         </main>
+        {this.displayShareModal()}
       </div>
     );
   }
@@ -207,6 +281,8 @@ BookmarksPage.propTypes = {
   currentCollection: collectionShape,
   searchQuery: PropTypes.string,
   addBookmarkLoading: PropTypes.bool,
+  history: PropTypes.object,
+  bookmarksLoading: PropTypes.bool
 };
 
 export default connect(state => ({
@@ -215,4 +291,5 @@ export default connect(state => ({
   currentCollection: getCurrentCollection(state),
   searchQuery: getSearchQuery(state),
   addBookmarkLoading: getAddBookmarkLoading(state),
+  bookmarksLoading: getBookmarksLoading(state)
 }))(CSSModules(BookmarksPage, styles));

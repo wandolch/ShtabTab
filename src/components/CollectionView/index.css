@@ -1,27 +1,81 @@
 @import "../../style/variables.css";
+.wrapper{
 
-.collection-container {
-  transition: background-color 0.3s;
+  .collection-container {
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-  &:not(.is-active):hover{
-    background-color: rgba(255,255,255,0.1);
+    &:not(.is-active):hover{
+      background-color: rgba(255,255,255,0.1);
+    }
+
+    &:hover{
+      .options{
+        opacity: 0.6;
+      }
+    }
+
+    &:not(.is-active):active{
+      background-color: rgba(255,255,255,0.2);
+    }
+
+    .collection-link {
+      width: calc(100% - 30px);
+      word-wrap: break-word;
+      display: block;
+      padding: 10px 0 10px 20px;
+      text-decoration: none;
+      color:white;
+      font-size: 18px;
+    }
+
+    .options{
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 25px;
+      margin-right: 5px;
+
+      &:hover{
+        opacity: 1;
+      }
+    }
   }
 
-  &:not(.is-active):active{
-    background-color: rgba(255,255,255,0.2);
-  }
+  .context-menu{
+    display: flex;
+    z-index: 100;
+    padding: 10px 0;
+    position: absolute;
+    background-color: white;
+    border-radius: 10px;
+    flex-direction: column;
+    margin-left: 242px;
+    margin-top: -25px;
+    box-shadow: 2px 5px 17px -8px rgba(0,0,0,0.75);
+    background-color: rgba(240,240,240,0.9);
 
-  &:not(:last-child){
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
-}
 
-.collection-link {
-  display: block;
-  padding: 10px 20px;
-  text-decoration: none;
-  color:white;
-  font-size: 20px;
+    .context-btn{
+      cursor: pointer;
+      transition: 0.3s;
+      padding: 5px 10px;
+      font-size: 15px;
+      color: black;
+      display: inline-block;
+
+      &:hover{
+        color: white;
+        background-color: rgba(0,0,0,0.4);
+      }
+
+      &:active{
+        background-color: rgba(0,0,0,0.6);
+      }
+    }
+  }
 }
 
 .is-active{

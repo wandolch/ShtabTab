@@ -6,13 +6,67 @@ import styles from './index.css';
 import { collectionShape } from '../../model/collectionShape';
 
 class CollectionView extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showMenu: false
+    };
+  }
+
+  onShareClick = () => {
+    this.props.onCollectionShare(this.props.item.id);
+  };
+
+  closeContext = () => {
+    this.setState({ showMenu: false }, () => {
+      document.removeEventListener('click', this.closeContext);
+    });
+  };
+
+  showContext = (event) => {
+    event.preventDefault();
+
+    this.setState(
+      {
+        showMenu: true
+      },
+      () => {
+        document.addEventListener('click', this.closeContext);
+      }
+    );
+  };
+
+  renderContextMenu() {
+    if (this.state.showMenu) {
+      return (
+        <div
+          styleName="context-menu"
+          onClick={this.closeContext}
+          ref={(el) => { this.contextMenu = el; }}>
+          <div styleName="context-btn">Edit</div>
+          <div styleName="context-btn">Remove</div>
+          <div onClick={this.onShareClick} styleName="context-btn">Share</div>
+        </div>
+      );
+    } return null;
+  }
+
   render() {
     return (
-      <div className={`${styles['collection-container']} ${this.props.isActive ? styles['is-active'] : ''}`}>
-        <Link
-          to={`/collection/${this.props.item.id}`}
-          styleName="collection-link">{this.props.item.title}
-        </Link>
+      <div styleName="wrapper">
+        <div className={`${styles['collection-container']} ${this.props.isActive ? styles['is-active'] : ''}`}>
+          <Link
+            to={`/collection/${this.props.item.id}`}
+            styleName="collection-link">{this.props.item.title}
+          </Link>
+          <i
+            onClick={this.showContext}
+            styleName="options"
+            className="material-icons">more_vert
+          </i>
+        </div>
+        {this.renderContextMenu()}
       </div>
     );
   }
@@ -20,7 +74,8 @@ class CollectionView extends Component {
 
 CollectionView.propTypes = {
   item: collectionShape,
-  isActive: PropTypes.bool
+  isActive: PropTypes.bool,
+  onCollectionShare: PropTypes.func
 };
 
 export default CSSModules(CollectionView, styles);

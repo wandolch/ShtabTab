@@ -1,5 +1,5 @@
 import { all, fork } from 'redux-saga/effects';
-import { addBookmarkSaga, bookmarksSaga, collectionsSaga, deleteBookmarkSaga } from './bookmarksSagas';
+import { addBookmarkSaga, addCollectionSaga, bookmarksSaga, collectionsSaga, deleteBookmarkSaga } from './bookmarksSagas';
 import { signInSaga } from './commonSagas';
 
 export default function* root() {
@@ -8,6 +8,7 @@ export default function* root() {
     fork(signInSaga),
     fork(collectionsSaga),
     fork(addBookmarkSaga),
-    fork(deleteBookmarkSaga)
+    fork(deleteBookmarkSaga),
+    fork(addCollectionSaga)
   ]);
 }

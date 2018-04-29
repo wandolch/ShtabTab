@@ -5,6 +5,7 @@ export default (state = bookmarksState, action) => {
   switch (action.type) {
   case actionTypes.FETCH_BOOKMARKS:
     return Object.assign({}, state, {
+      currentBookmarks: [],
       bookmarksLoading: true
     });
 
@@ -75,6 +76,22 @@ export default (state = bookmarksState, action) => {
   case actionTypes.DEL_BOOKMARK_ERROR:
     return Object.assign({}, state, {
       delBookmarkLoading: false
+    });
+
+  case actionTypes.ADD_COLLECTION:
+    return Object.assign({}, state, {
+      addCollectionLoading: true
+    });
+
+  case actionTypes.ADD_COLLECTION_SUCCESS:
+    return Object.assign({}, state, {
+      collections: [...state.collections, action.payload],
+      addCollectionLoading: false
+    });
+
+  case actionTypes.ADD_COLLECTION_ERROR:
+    return Object.assign({}, state, {
+      addCollectionLoading: false
     });
 
   default:

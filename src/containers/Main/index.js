@@ -27,7 +27,7 @@ class Main extends Component {
   showLoading() {
     if (this.props.collectionsLoading || this.props.bookmarksLoading) {
       return (
-        <LoadingIndicator/>
+        <LoadingIndicator wait={200}/>
       );
     }
   }

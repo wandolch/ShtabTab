@@ -17,4 +17,8 @@ export default class BookmarksRepository {
   static deleteBookmark(id) {
     return TransportService.del(`${apiRoutes.bookmarkUrl}/${id}`);
   }
+
+  static addCollection(title) {
+    return TransportService.post(apiRoutes.collectionUrl, { title });
+  }
 }
