@@ -5,5 +5,6 @@ export const collectionShape = PropTypes.shape({
   id: PropTypes.string,
   index: PropTypes.number,
   created: PropTypes.string,
-  creatorId: PropTypes.string
+  owners: PropTypes.array,
+  defaultStyle: PropTypes.bool
 });

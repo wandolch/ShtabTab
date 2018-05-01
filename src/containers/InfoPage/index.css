@@ -1,3 +1,73 @@
-.google-login-btn{
-  font-size: 100px;
+@import "../../style/mixins.css";
+
+.info-page-wrapper{
+  width: 100%;
+  height: 100%;
+}
+
+.info-page-background{
+  @mixin defaultGradient;
+  width: 100%;
+  height: 100%;
+  filter: brightness(15%);
+  position: absolute;
+}
+
+.info-page-container{
+  position: relative;
+  z-index: 50;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.google-button {
+  height: 70px;
+  border-width: 0;
+  background: white;
+  color: #737373;
+  border-radius: 5px;
+  white-space: nowrap;
+  box-shadow: 1px 1px 0px 1px rgba(0,0,0,0.05);
+  transition-property: background-color, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: ease-in-out;
+  padding: 0;
+
+  &:focus,
+  &:hover {
+    box-shadow: 1px 4px 5px 1px rgba(0,0,0,0.1);
+  }
+
+  &:active {
+    background-color: #e5e5e5;
+    box-shadow: none;
+    transition-duration: 10ms;
+  }
+}
+
+.google-button__icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 12px 0 12px 12px;
+  width: 32px;
+  height: 32px;
+  box-sizing: border-box;
+}
+
+.google-button__icon--plus {
+  width: 54px;
+}
+
+.google-button__text {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0 50px;
+  font-size: 30px;
+  font-weight: bold;
+  font-family: 'Roboto',arial,sans-serif;
 }

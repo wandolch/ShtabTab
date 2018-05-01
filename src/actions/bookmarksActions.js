@@ -113,3 +113,67 @@ export function addCollectionError() {
   };
 }
 
+export function userLogout() {
+  return {
+    type: actionTypes.USER_LOGOUT
+  };
+}
+
+export function shareCollection(collectionId, email) {
+  return {
+    type: actionTypes.SHARE_COLLECTION,
+    payload: { collectionId, email }
+  };
+}
+
+export function shareCollectionSuccess() {
+  return {
+    type: actionTypes.SHARE_COLLECTION_SUCCESS
+  };
+}
+
+export function shareCollectionError() {
+  return {
+    type: actionTypes.SHARE_COLLECTION_ERROR
+  };
+}
+
+export function deleteCollection(id) {
+  return {
+    type: actionTypes.DELETE_COLLECTION,
+    payload: id
+  };
+}
+
+export function deleteCollectionSuccess(collections) {
+  return {
+    type: actionTypes.DELETE_COLLECTION_SUCCESS,
+    payload: collections
+  };
+}
+
+export function deleteCollectionError() {
+  return {
+    type: actionTypes.DELETE_COLLECTION_ERROR
+  };
+}
+
+export function toggleCollectionView(id) {
+  return {
+    type: actionTypes.TOGGLE_VIEW,
+    payload: id
+  };
+}
+
+export function toggleCollectionViewSuccess(collection) {
+  return {
+    type: actionTypes.TOGGLE_VIEW_SUCCESS,
+    payload: collection
+  };
+}
+
+export function toggleCollectionViewError() {
+  return {
+    type: actionTypes.TOGGLE_VIEW_ERROR
+  };
+}

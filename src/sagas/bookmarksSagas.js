@@ -5,7 +5,9 @@ import {
   addBookmarkError,
   addBookmarkSuccess, addCollectionError, addCollectionSuccess,
   bookmarksFetched, bookmarksFetchingError, collectionsFetched,
-  collectionsFetchingError, delBookmarkError, delBookmarkSuccess
+  collectionsFetchingError, delBookmarkError, delBookmarkSuccess, deleteCollectionError, deleteCollectionSuccess,
+  shareCollectionError,
+  shareCollectionSuccess, toggleCollectionViewError, toggleCollectionViewSuccess
 } from '../actions/bookmarksActions';
 import { applicationError } from '../actions/commonActions';
 
@@ -77,4 +79,46 @@ function* addCollection(action) {
 
 export function* addCollectionSaga() {
   yield takeLatest(actionTypes.ADD_COLLECTION, addCollection);
+}
+
+function* shareCollection(action) {
+  try {
+    yield call(BookmarksRepository.shareCollection, action.payload);
+    yield put(shareCollectionSuccess());
+  } catch (e) {
+    yield put(shareCollectionError());
+    yield put(applicationError(e));
+  }
+}
+
+export function* shareCollectionSaga() {
+  yield takeLatest(actionTypes.SHARE_COLLECTION, shareCollection);
+}
+
+function* deleteCollection(action) {
+  try {
+    const res = yield call(BookmarksRepository.deleteCollection, action.payload);
+    yield put(deleteCollectionSuccess(res));
+  } catch (e) {
+    yield put(deleteCollectionError());
+    yield put(applicationError(e));
+  }
+}
+
+export function* deleteCollectionSaga() {
+  yield takeLatest(actionTypes.DELETE_COLLECTION, deleteCollection);
+}
+
+function* toggleCollectionView(action) {
+  try {
+    const res = yield call(BookmarksRepository.toggleCollectionView, action.payload);
+    yield put(toggleCollectionViewSuccess(res));
+  } catch (e) {
+    yield put(toggleCollectionViewError());
+    yield put(applicationError(e));
+  }
+}
+
+export function* toggleCollectionViewSaga() {
+  yield takeLatest(actionTypes.TOGGLE_VIEW, toggleCollectionView);
 }

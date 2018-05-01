@@ -7,16 +7,20 @@ class LoadingIndicator extends Component {
   constructor(props) {
     super(props);
     this.state = { hidden: styles.hidden };
+    this.isAlive = true;
   }
 
-  componentWillMount() {
+  componentDidMount() {
     setTimeout(() => {
-      this.show();
+      if (this.isAlive) {
+        this.setState({ hidden: '' });
+      }
     }, this.props.wait);
   }
 
-  show() {
-    this.setState({ hidden: '' });
+
+  componentWillUnmount() {
+    this.isAlive = false;
   }
 
   render() {

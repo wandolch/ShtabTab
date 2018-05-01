@@ -1,5 +1,6 @@
 import { actionTypes } from '../constants/actionTypes';
 import { bookmarksState } from '../states/bookmarksState';
+import TransformService from '../services/TransformService';
 
 export default (state = bookmarksState, action) => {
   switch (action.type) {
@@ -92,6 +93,65 @@ export default (state = bookmarksState, action) => {
   case actionTypes.ADD_COLLECTION_ERROR:
     return Object.assign({}, state, {
       addCollectionLoading: false
+    });
+
+  case actionTypes.USER_LOGOUT:
+    return Object.assign(bookmarksState);
+
+  case actionTypes.SHARE_COLLECTION:
+    return Object.assign({}, state, {
+      shareCollectionLoading: true,
+      shareCollectionError: false
+    });
+
+  case actionTypes.SHARE_COLLECTION_SUCCESS:
+    return Object.assign({}, state, {
+      shareCollectionLoading: false,
+      shareCollectionError: false
+    });
+
+  case actionTypes.SHARE_COLLECTION_ERROR:
+    return Object.assign({}, state, {
+      shareCollectionLoading: false,
+      shareCollectionError: true
+    });
+
+  case actionTypes.DELETE_COLLECTION:
+    return Object.assign({}, state, {
+      deleteCollectionLoading: true,
+      deleteCollectionError: false
+    });
+
+  case actionTypes.DELETE_COLLECTION_SUCCESS:
+    return Object.assign({}, state, {
+      collections: action.payload,
+      deleteCollectionLoading: false,
+      deleteCollectionError: false
+    });
+
+  case actionTypes.DELETE_COLLECTION_ERROR:
+    return Object.assign({}, state, {
+      deleteCollectionLoading: false,
+      deleteCollectionError: true
+    });
+
+  case actionTypes.TOGGLE_VIEW:
+    return Object.assign({}, state, {
+      toggleCollectionViewLoading: true,
+      toggleCollectionViewError: false
+    });
+
+  case actionTypes.TOGGLE_VIEW_SUCCESS:
+    return Object.assign({}, state, {
+      collections: TransformService.mergeUniq([action.payload], state.collections).sort((a, b) => a.index > b.index),
+      toggleCollectionViewLoading: false,
+      toggleCollectionViewError: false
+    });
+
+  case actionTypes.TOGGLE_VIEW_ERROR:
+    return Object.assign({}, state, {
+      toggleCollectionViewLoading: false,
+      toggleCollectionViewError: true
     });
 
   default:

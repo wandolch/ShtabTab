@@ -1,0 +1,65 @@
+@import "../../style/variables.css";
+
+.bookmark-link {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  text-decoration: none;
+  align-items: center;
+  color: black;
+  overflow: hidden;
+  z-index: 10;
+  transition: filter 0.4s easeOutSine;
+  padding: 15px 0;
+  border-bottom: 1px solid #eeeeee;
+  cursor: pointer;
+
+  .bookmark-info{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .favicon{
+    cursor: pointer;
+    width: 20px;
+  }
+  .bookmark-text {
+    margin-left: 25px;
+    display: inline-block;
+    flex-direction: column;
+    cursor: pointer;
+  }
+
+  .bookmrak-title{
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 7px;
+  }
+
+  .bookmrak-domain{
+    transition: 0.2s;
+    background-color: #eeeeee;
+    display: inline-block;
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+  .delete-icon{
+    cursor: pointer;
+    display: inline-block;
+    opacity: 0.0;
+    color: #d6d4d3;
+    transition: 0.2s;
+
+    &:hover{
+      color: #ababab;
+    }
+  }
+
+  &:hover {
+    .delete-icon{
+      opacity: 0.7;
+    }
+  }
+}

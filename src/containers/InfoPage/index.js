@@ -7,9 +7,12 @@ import styles from './index.css';
 import { doSignIn, applicationError } from '../../actions/commonActions';
 import { getUser } from '../../states/commonState';
 import { userShape } from '../../model/userShape';
+import logo from '../../assets/logo.png';
+import google from '../../assets/google.svg';
 
 const googleLoginStyle = {
-  fontSize: '100px'
+  backgroundColor: 'rbga(0,0,0,0)',
+  padding: '20px'
 };
 
 class InfoPage extends Component {
@@ -30,14 +33,25 @@ class InfoPage extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Welcome to ShtabTab</h1>
-        <GoogleLogin
-          clientId="814580486195-msr1p79efvrn7u99c4md7gucd1rot2ks.apps.googleusercontent.com"
-          buttonText="Login"
-          onSuccess={this.responseGoogle}
-          style={googleLoginStyle}
-          onFailure={this.failGoogle}/>
+      <div styleName="info-page-wrapper">
+        <div styleName="info-page-background" />
+        <div styleName="info-page-container">
+          <GoogleLogin
+            clientId="814580486195-msr1p79efvrn7u99c4md7gucd1rot2ks.apps.googleusercontent.com"
+            buttonText="LOGIN VIA GOOGLE"
+            onSuccess={this.responseGoogle}
+            tag="div"
+            type="tag"
+            style={googleLoginStyle}
+            onFailure={this.failGoogle}>
+            <button type="button" styleName="google-button">
+              <span styleName="google-button__icon">
+                <img src={google} alt="google"/>
+              </span>
+              <span styleName="google-button__text">Sign in with Google</span>
+            </button>
+          </GoogleLogin>
+        </div>
       </div>
     );
   }

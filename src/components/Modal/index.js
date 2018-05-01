@@ -11,7 +11,7 @@ class Modal extends Component {
   };
 
   render() {
-    return this.props.hidden ? (
+    return this.props.display ? (
       <div
         styleName="modal-container"
         ref={(el) => { this.container = el; }}
@@ -31,7 +31,7 @@ class Modal extends Component {
 }
 
 Modal.propTypes = {
-  hidden: PropTypes.bool,
+  display: PropTypes.string,
   onClose: PropTypes.func,
   title: PropTypes.string,
   children: PropTypes.oneOfType([

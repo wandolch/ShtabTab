@@ -21,4 +21,16 @@ export default class BookmarksRepository {
   static addCollection(title) {
     return TransportService.post(apiRoutes.collectionUrl, { title });
   }
+
+  static shareCollection({ collectionId, email }) {
+    return TransportService.post(`${apiRoutes.collectionUrl}/${collectionId}/${apiRoutes.shareUrl}`, { email });
+  }
+
+  static deleteCollection(id) {
+    return TransportService.del(`${apiRoutes.collectionUrl}/${id}`);
+  }
+
+  static toggleCollectionView(id) {
+    return TransportService.get(`${apiRoutes.collectionUrl}/${id}/toggle-style`);
+  }
 }

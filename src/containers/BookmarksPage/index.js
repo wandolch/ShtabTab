@@ -3,19 +3,22 @@ import PropTypes from 'prop-types';
 import { CSSTransitionGroup } from 'react-transition-group';
 import { Helmet } from 'react-helmet';
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 import CSSModules from 'react-css-modules';
 import styles from './index.css';
 import {
   getCollections, getCurrentBookmarks, getCurrentCollection,
-  getSearchQuery, getAddBookmarkLoading, getBookmarksLoading
+  getSearchQuery, getAddBookmarkLoading, getBookmarksLoading,
+  getShareCollectionLoading, getShareCollectionError, getDeleteCollectionLoading, getDeleteCollectionError
 } from '../../states/bookmarksState';
 import {
   fetchCollections, fetchBookmarks, setBookmarksSearch,
-  setCurrentCollection, addBookmark, delBookmark, addCollection
+  setCurrentCollection, addBookmark, delBookmark, addCollection, shareCollection, deleteCollection, toggleCollectionView
 } from '../../actions/bookmarksActions';
 import { bookmarkShape } from '../../model/bookmarkShape';
 import { collectionShape } from '../../model/collectionShape';
 import BookmarkView from '../../components/BookmarkView/index';
+import BookmarkAltView from '../../components/BookmarkAltView/index';
 import CollectionView from '../../components/CollectionView/index';
 import SearchInput from '../../components/SearchInput/index';
 import Modal from '../../components/Modal/index';
@@ -30,7 +33,7 @@ class BookmarksPage extends Component {
       loadingDots: '',
       dotsInterval: null,
       user: JSON.parse(localStorage.getItem('st-user')),
-      isShowingShareModal: false
+      shareCollectionId: null
     };
   }
 
@@ -38,19 +41,19 @@ class BookmarksPage extends Component {
     if (!this.props.collections) {
       this.props.dispatch(fetchCollections());
     } else {
-      this.setCurrentCollections(this.props.match.params.id, this.props.collections);
+      this.setNewCurrentCollection(this.props.match.params.id, this.props.collections);
     }
     this.props.dispatch(fetchBookmarks(this.props.match.params.id));
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.match.params.id !== this.props.match.params.id) {
-      this.setCurrentCollections(nextProps.match.params.id, nextProps.collections);
+      this.setNewCurrentCollection(nextProps.match.params.id, nextProps.collections);
       this.props.dispatch(fetchBookmarks(nextProps.match.params.id));
     }
 
     if (nextProps.collections && (nextProps.collections !== this.props.collections)) {
-      this.setCurrentCollections(this.props.match.params.id, nextProps.collections);
+      this.setNewCurrentCollection(this.props.match.params.id, nextProps.collections);
     }
 
     if (nextProps.addBookmarkLoading === true && this.props.addBookmarkLoading === false) {
@@ -58,6 +61,23 @@ class BookmarksPage extends Component {
       this.setState({ dotsInterval });
     } else if (nextProps.addBookmarkLoading === false && this.props.addBookmarkLoading === true) {
       clearInterval(this.state.dotsInterval);
+    }
+
+    if (!nextProps.shareCollectionError && !nextProps.shareCollectionLoading
+      && this.props.shareCollectionLoading && !this.props.shareCollectionError) {
+      this.closeShareModal();
+      toast.success('Collection has been shared!', {
+        position: toast.POSITION.TOP_RIGHT,
+        className: {
+          borderRadius: '10px'
+        },
+        hideProgressBar: true
+      });
+    }
+
+    if (this.props.collections && nextProps.collections
+      && this.props.currentCollection && !nextProps.currentCollection) {
+      this.props.history.push(`/collection/${nextProps.collections[0].id}`);
     }
   }
 
@@ -83,18 +103,28 @@ class BookmarksPage extends Component {
 
   onLogout = () => {
     localStorage.removeItem('st-user');
-    this.props.history.push('/info');
+    // this.props.dispatch(userLogout());
+    // this.props.history.push('/info');
+    window.location.reload();
   };
 
   onCollectionShare = (id) => {
-    this.setState({ isShowingShareModal: true });
+    this.setState({ shareCollectionId: id });
+  };
+
+  onCollectionDelete = (id) => {
+    this.props.dispatch(deleteCollection(id));
+  };
+
+  onToggleView = (id) => {
+    this.props.dispatch(toggleCollectionView(id));
   };
 
   getCurrentCollectionTitle() {
     return this.props.currentCollection ? this.props.currentCollection.title : '';
   }
 
-  setCurrentCollections(id, collections) {
+  setNewCurrentCollection(id, collections) {
     const currentCollection = collections
       .find(collection => collection.id === id);
     this.props.dispatch(setCurrentCollection(currentCollection));
@@ -140,9 +170,8 @@ class BookmarksPage extends Component {
 
   handleShareInputPress = (event) => {
     if (event.key === 'Enter' && this.state.userToShare) {
-      // dispatch
+      this.props.dispatch(shareCollection(this.state.shareCollectionId, this.state.userToShare));
       this.setState({ userToShare: '' });
-      // this.closeShareModal();
     }
   };
 
@@ -180,6 +209,8 @@ class BookmarksPage extends Component {
               {collections.map(item => (<CollectionView
                 isActive={this.props.match.params.id === item.id}
                 item={item}
+                onDelete={this.onCollectionDelete}
+                onToggleView={this.onToggleView}
                 onCollectionShare={this.onCollectionShare}
                 key={item.id}/>))}
             </div>
@@ -209,6 +240,7 @@ class BookmarksPage extends Component {
 
   showBookmarksSide() {
     const bm = this.props.bookmarks;
+    const defaultStyle = this.props.currentCollection ? this.props.currentCollection.defaultStyle : true;
     if (bm && !this.props.bookmarksLoading) {
       return (
         <section styleName="bookmarks-container">
@@ -223,7 +255,10 @@ class BookmarksPage extends Component {
               transitionEnterTimeout={300}
               transitionLeaveTimeout={300}
               transitionName={styles}>
-              {bm.map(item => (<BookmarkView item={item} onDelete={this.onDelete} key={item.id}/>))}
+              {
+                defaultStyle ? bm.map(item => (<BookmarkView item={item} onDelete={this.onDelete} key={item.id}/>))
+                  : bm.map(item => (<BookmarkAltView item={item} onDelete={this.onDelete} key={item.id}/>))
+              }
             </CSSTransitionGroup>
             {this.checkBookmarksEmpty()}
           </div>
@@ -237,14 +272,14 @@ class BookmarksPage extends Component {
   }
 
   closeShareModal = () => {
-    this.setState({ isShowingShareModal: false });
+    this.setState({ shareCollectionId: null, userToShare: '' });
   };
 
   displayShareModal() {
     return (
       <Modal
         title="Share collection"
-        hidden={this.state.isShowingShareModal}
+        display={this.state.shareCollectionId}
         onClose={this.closeShareModal}>
         <p>Please enter email of the person you want to share</p>
         <input
@@ -282,7 +317,11 @@ BookmarksPage.propTypes = {
   searchQuery: PropTypes.string,
   addBookmarkLoading: PropTypes.bool,
   history: PropTypes.object,
-  bookmarksLoading: PropTypes.bool
+  bookmarksLoading: PropTypes.bool,
+  shareCollectionLoading: PropTypes.bool,
+  shareCollectionError: PropTypes.bool,
+  deleteCollectionLoading: PropTypes.bool,
+  deleteCollectionError: PropTypes.bool
 };
 
 export default connect(state => ({
@@ -291,5 +330,9 @@ export default connect(state => ({
   currentCollection: getCurrentCollection(state),
   searchQuery: getSearchQuery(state),
   addBookmarkLoading: getAddBookmarkLoading(state),
-  bookmarksLoading: getBookmarksLoading(state)
+  bookmarksLoading: getBookmarksLoading(state),
+  shareCollectionLoading: getShareCollectionLoading(state),
+  shareCollectionError: getShareCollectionError(state),
+  deleteCollectionLoading: getDeleteCollectionLoading(state),
+  deleteCollectionError: getDeleteCollectionError(state)
 }))(CSSModules(BookmarksPage, styles));

@@ -9,7 +9,13 @@ export const bookmarksState = {
   searchQuery: '',
   addBookmarkLoading: false,
   delBookmarkLoading: false,
-  addCollectionLoading: false
+  addCollectionLoading: false,
+  shareCollectionLoading: false,
+  shareCollectionError: false,
+  deleteCollectionLoading: false,
+  deleteCollectionError: false,
+  toggleCollectionViewLoading: false,
+  toggleCollectionViewError: false
 };
 
 const getBookmarksState = state => state.bookmarks;
@@ -29,6 +35,8 @@ export const getCurrentCollection = createSelector([getBookmarksState], state =>
 export const getCollectionsLoading = createSelector([getBookmarksState], state => state.collectionsLoading);
 export const getSearchQuery = createSelector([getBookmarksState], state => state.searchQuery);
 export const getAddBookmarkLoading = createSelector([getBookmarksState], state => state.addBookmarkLoading);
-export const getDelBookmarkLoading = createSelector([getBookmarksState], state => state.delBookmarkLoading);
-export const getAddCollectionLoading = createSelector([getBookmarksState], state => state.addCollectionLoading);
+export const getShareCollectionLoading = createSelector([getBookmarksState], state => state.shareCollectionLoading);
+export const getShareCollectionError = createSelector([getBookmarksState], state => state.shareCollectionError);
+export const getDeleteCollectionLoading = createSelector([getBookmarksState], state => state.deleteCollectionLoading);
+export const getDeleteCollectionError = createSelector([getBookmarksState], state => state.deleteCollectionError);
 
