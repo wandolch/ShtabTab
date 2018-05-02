@@ -94,6 +94,20 @@
             .user-name {
               font-size: 27px;
             }
+
+            .stat{
+              cursor: pointer;
+              margin-left: 5px;
+              color: white;
+              margin-top: 3px;
+              font-size: 18px;
+              transition: color 0.2s;
+
+              &:hover{
+                color: #eeeeee;
+              }
+            }
+
             .logout {
               margin-left: 1px;
               cursor: pointer;

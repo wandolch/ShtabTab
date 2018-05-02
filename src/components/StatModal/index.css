@@ -1,0 +1,51 @@
+@import "../../style/variables.css";
+@import "../../style/mixins.css";
+
+.modal-container{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: rgba(0,0,0,0.95);
+  display: flex;
+  justify-content: center;
+
+  .close-modal{
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+  }
+
+  .modal-window{
+    margin-top: 10%;
+    cursor: default;
+    width: 600px;
+    padding: 20px;
+    box-shadow: 0 19px 36px -15px rgba(0,0,0,0.75);
+
+    .modal-window-header{
+      text-align: center;
+      color: white;
+
+      .title{
+        margin: 0;
+        font-size: 60px;
+      }
+    }
+
+    .modal-window-body{
+      text-align: center;
+      font-size: 18px;
+      color: white;
+
+      p{
+        font-size: 22px;
+      }
+    }
+  }
+}

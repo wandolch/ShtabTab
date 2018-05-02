@@ -22,6 +22,7 @@ import BookmarkAltView from '../../components/BookmarkAltView/index';
 import CollectionView from '../../components/CollectionView/index';
 import SearchInput from '../../components/SearchInput/index';
 import Modal from '../../components/Modal/index';
+import StatModal from '../../components/StatModal/index';
 
 class BookmarksPage extends Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class BookmarksPage extends Component {
       userToShare: '',
       loadingDots: '',
       dotsInterval: null,
+      statModalOpen: false,
       user: JSON.parse(localStorage.getItem('st-user')),
       shareCollectionId: null
     };
@@ -176,6 +178,14 @@ class BookmarksPage extends Component {
     }
   };
 
+  openStatModal = () => {
+    this.setState({ statModalOpen: true });
+  };
+
+  closeStatModal = () => {
+    this.setState({ statModalOpen: false });
+  };
+
   handleShareInputPress = (event) => {
     if (event.key === 'Enter' && this.state.userToShare) {
       this.props.dispatch(shareCollection(this.state.shareCollectionId, this.state.userToShare));
@@ -237,7 +247,9 @@ class BookmarksPage extends Component {
             <div styleName="account-info-container">
               <img styleName="avatar" src={this.state.user.picture} alt="avatar"/>
               <div styleName="account-info-block">
-                <div styleName="user-name">{this.state.user.givenName}</div>
+                <div styleName="user-name">{this.state.user.givenName}
+                  <span onClick={this.openStatModal} className="material-icons" styleName="stat">info_outline</span>
+                </div>
                 <div onClick={this.onLogout} styleName="logout">logout</div>
               </div>
             </div>
@@ -302,6 +314,21 @@ class BookmarksPage extends Component {
     );
   }
 
+  displayStatModal() {
+    return (
+      <StatModal
+        title="Ivan's statistics"
+        display={this.state.statModalOpen}
+        onClose={this.closeStatModal}>
+        <p>The most visited site — YOUTUBE.COM</p>
+        <p>The most visited site for today — VK.COM</p>
+        <p>The most popular site topic — SOCIAL NETWORK</p>
+        <p>The most popular site topic for today — IT</p>
+        <p>The most unused site — COURSERA.ORG</p>
+      </StatModal>
+    );
+  }
+
   render() {
     return (
       <div styleName="bookmarks-page-wrapper">
@@ -313,6 +340,7 @@ class BookmarksPage extends Component {
           {this.showBookmarksSide()}
         </main>
         {this.displayShareModal()}
+        {this.displayStatModal()}
       </div>
     );
   }
