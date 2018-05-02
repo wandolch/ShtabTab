@@ -28,6 +28,10 @@ class BookmarkView extends Component {
     this.props.onDelete(this.props.item.id);
   };
 
+  sendStat = () => {
+    this.props.stat(this.props.item.id);
+  };
+
   render() {
     const bookmarkWrapperCss = {
       backgroundColor: `rgb(${this.props.item.rgb})`,
@@ -45,14 +49,18 @@ class BookmarkView extends Component {
     };
 
     return (
-      <div styleName="bookmark-container">
-        <div styleName="delete-icon-wrapper">
-          <div
-            onClick={this.deleteHandle}
-            styleName="delete-icon">
-            <i className="material-icons">clear</i>
-          </div>
-        </div>
+      <div onClick={this.sendStat} styleName="bookmark-container">
+        {
+          this.props.onDelete ? (
+            <div styleName="delete-icon-wrapper">
+              <div
+                onClick={this.deleteHandle}
+                styleName="delete-icon">
+                <i className="material-icons">clear</i>
+              </div>
+            </div>
+          ) : null
+        }
         <a
           href={this.props.item.link}
           target="_blank"
@@ -73,6 +81,7 @@ class BookmarkView extends Component {
 
 BookmarkView.propTypes = {
   item: bookmarkShape,
+  stat: PropTypes.func,
   onDelete: PropTypes.func
 };
 

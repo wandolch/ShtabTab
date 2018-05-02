@@ -154,6 +154,49 @@ export default (state = bookmarksState, action) => {
       toggleCollectionViewError: true
     });
 
+  case actionTypes.SET_FILTER_SEARCH:
+    return Object.assign({}, state, {
+      filterSearch: action.payload.toLowerCase()
+    });
+
+  case actionTypes.GET_TOPICS:
+    return Object.assign({}, state, {
+      topicsLoading: true,
+      topicsError: false
+    });
+
+  case actionTypes.GET_TOPICS_SUCCESS:
+    return Object.assign({}, state, {
+      topics: action.payload,
+      topicsLoading: false,
+      topicsError: false
+    });
+
+  case actionTypes.GET_TOPICS_ERROR:
+    return Object.assign({}, state, {
+      topicsLoading: false,
+      topicsError: true
+    });
+
+  case actionTypes.GET_FILTERED_BOOKMARKS:
+    return Object.assign({}, state, {
+      filteredBookmarksLoading: true,
+      filteredBookmarksError: false
+    });
+
+  case actionTypes.GET_FILTERED_BOOKMARKS_SUCCESS:
+    return Object.assign({}, state, {
+      filteredBookmarks: action.payload,
+      filteredBookmarksLoading: false,
+      filteredBookmarksError: false
+    });
+
+  case actionTypes.GET_FILTERED_BOOKMARKS_ERROR:
+    return Object.assign({}, state, {
+      filteredBookmarksLoading: false,
+      filteredBookmarksError: true
+    });
+
   default:
     return state;
   }

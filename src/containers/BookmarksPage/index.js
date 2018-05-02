@@ -9,10 +9,10 @@ import styles from './index.css';
 import {
   getCollections, getCurrentBookmarks, getCurrentCollection,
   getSearchQuery, getAddBookmarkLoading, getBookmarksLoading,
-  getShareCollectionLoading, getShareCollectionError, getDeleteCollectionLoading, getDeleteCollectionError
+  getShareCollectionLoading, getShareCollectionError
 } from '../../states/bookmarksState';
 import {
-  fetchCollections, fetchBookmarks, setBookmarksSearch,
+  fetchCollections, fetchBookmarks, setBookmarksSearch, sendStat,
   setCurrentCollection, addBookmark, delBookmark, addCollection, shareCollection, deleteCollection, toggleCollectionView
 } from '../../actions/bookmarksActions';
 import { bookmarkShape } from '../../model/bookmarkShape';
@@ -106,6 +106,14 @@ class BookmarksPage extends Component {
     // this.props.dispatch(userLogout());
     // this.props.history.push('/info');
     window.location.reload();
+  };
+
+  goToSmartFilter = () => {
+    this.props.history.push('/smart-filter');
+  };
+
+  sendStats = (id) => {
+    this.props.dispatch(sendStat(id));
   };
 
   onCollectionShare = (id) => {
@@ -225,6 +233,7 @@ class BookmarksPage extends Component {
             </div>
           </div>
           <div styleName="bottom-part">
+            <div styleName="smart-filter" onClick={this.goToSmartFilter}>Smart filter</div>
             <div styleName="account-info-container">
               <img styleName="avatar" src={this.state.user.picture} alt="avatar"/>
               <div styleName="account-info-block">
@@ -256,8 +265,9 @@ class BookmarksPage extends Component {
               transitionLeaveTimeout={300}
               transitionName={styles}>
               {
-                defaultStyle ? bm.map(item => (<BookmarkView item={item} onDelete={this.onDelete} key={item.id}/>))
-                  : bm.map(item => (<BookmarkAltView item={item} onDelete={this.onDelete} key={item.id}/>))
+                defaultStyle ?
+                  bm.map(item => (<BookmarkView stat={this.sendStats} item={item} onDelete={this.onDelete} key={item.id}/>))
+                  : bm.map(item => (<BookmarkAltView stat={this.sendStats} item={item} onDelete={this.onDelete} key={item.id}/>))
               }
             </CSSTransitionGroup>
             {this.checkBookmarksEmpty()}
@@ -319,9 +329,7 @@ BookmarksPage.propTypes = {
   history: PropTypes.object,
   bookmarksLoading: PropTypes.bool,
   shareCollectionLoading: PropTypes.bool,
-  shareCollectionError: PropTypes.bool,
-  deleteCollectionLoading: PropTypes.bool,
-  deleteCollectionError: PropTypes.bool
+  shareCollectionError: PropTypes.bool
 };
 
 export default connect(state => ({
@@ -332,7 +340,5 @@ export default connect(state => ({
   addBookmarkLoading: getAddBookmarkLoading(state),
   bookmarksLoading: getBookmarksLoading(state),
   shareCollectionLoading: getShareCollectionLoading(state),
-  shareCollectionError: getShareCollectionError(state),
-  deleteCollectionLoading: getDeleteCollectionLoading(state),
-  deleteCollectionError: getDeleteCollectionError(state)
+  shareCollectionError: getShareCollectionError(state)
 }))(CSSModules(BookmarksPage, styles));

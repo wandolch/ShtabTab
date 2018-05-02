@@ -177,3 +177,56 @@ export function toggleCollectionViewError() {
     type: actionTypes.TOGGLE_VIEW_ERROR
   };
 }
+
+export function setSmartFilterSearch(query) {
+  return {
+    type: actionTypes.SET_FILTER_SEARCH,
+    payload: query
+  };
+}
+
+export function getTopicsAction() {
+  return {
+    type: actionTypes.GET_TOPICS,
+  };
+}
+
+export function getTopicsSuccess(topics) {
+  return {
+    type: actionTypes.GET_TOPICS_SUCCESS,
+    payload: topics
+  };
+}
+
+export function getTopicsError() {
+  return {
+    type: actionTypes.GET_TOPICS_ERROR
+  };
+}
+
+export function getFilteredBookmarksAction(topics) {
+  return {
+    type: actionTypes.GET_FILTERED_BOOKMARKS,
+    payload: topics
+  };
+}
+
+export function getFilteredBookmarksSuccess(bookmarks) {
+  return {
+    type: actionTypes.GET_FILTERED_BOOKMARKS_SUCCESS,
+    payload: bookmarks
+  };
+}
+
+export function getFilteredBookmarksError() {
+  return {
+    type: actionTypes.GET_FILTERED_BOOKMARKS_ERROR
+  };
+}
+
+export function sendStat(id) {
+  return {
+    type: actionTypes.SEND_STAT,
+    payload: id
+  };
+}

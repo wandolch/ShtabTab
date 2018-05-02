@@ -6,6 +6,10 @@ import {
   addBookmarkSuccess, addCollectionError, addCollectionSuccess,
   bookmarksFetched, bookmarksFetchingError, collectionsFetched,
   collectionsFetchingError, delBookmarkError, delBookmarkSuccess, deleteCollectionError, deleteCollectionSuccess,
+  getFilteredBookmarksError,
+  getFilteredBookmarksSuccess,
+  getTopicsError,
+  getTopicsSuccess,
   shareCollectionError,
   shareCollectionSuccess, toggleCollectionViewError, toggleCollectionViewSuccess
 } from '../actions/bookmarksActions';
@@ -121,4 +125,44 @@ function* toggleCollectionView(action) {
 
 export function* toggleCollectionViewSaga() {
   yield takeLatest(actionTypes.TOGGLE_VIEW, toggleCollectionView);
+}
+
+function* getTopics() {
+  try {
+    const res = yield call(BookmarksRepository.getTopics);
+    yield put(getTopicsSuccess(res));
+  } catch (e) {
+    yield put(getTopicsError());
+    yield put(applicationError(e));
+  }
+}
+
+export function* getTopicsSaga() {
+  yield takeLatest(actionTypes.GET_TOPICS, getTopics);
+}
+
+function* getFilteredBookmarks(action) {
+  try {
+    const res = yield call(BookmarksRepository.getFilteredBookmarks, action.payload);
+    yield put(getFilteredBookmarksSuccess(res));
+  } catch (e) {
+    yield put(getFilteredBookmarksError());
+    yield put(applicationError(e));
+  }
+}
+
+export function* getFilteredBookmarksSaga() {
+  yield takeLatest(actionTypes.GET_FILTERED_BOOKMARKS, getFilteredBookmarks);
+}
+
+function* sendStat(action) {
+  try {
+    yield call(BookmarksRepository.sendStat, action.payload);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+export function* sendStatSaga() {
+  yield takeLatest(actionTypes.SEND_STAT, sendStat);
 }

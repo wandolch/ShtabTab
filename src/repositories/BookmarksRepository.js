@@ -33,4 +33,16 @@ export default class BookmarksRepository {
   static toggleCollectionView(id) {
     return TransportService.get(`${apiRoutes.collectionUrl}/${id}/toggle-style`);
   }
+
+  static getTopics() {
+    return TransportService.get('topics');
+  }
+
+  static getFilteredBookmarks(topics) {
+    return TransportService.post(`${apiRoutes.bookmarkUrl}/topics`, { topics });
+  }
+
+  static sendStat(id) {
+    return TransportService.get(`${apiRoutes.bookmarkUrl}/${id}/statistics`);
+  }
 }

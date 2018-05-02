@@ -13,9 +13,13 @@ class BookmarkAltView extends Component {
     this.props.onDelete(this.props.item.id);
   };
 
+  sendStat = () => {
+    this.props.stat(this.props.item.id);
+  };
+
   render() {
     return (
-      <a href={this.props.item.link} target="_blank" styleName="bookmark-link">
+      <a onClick={this.sendStat} href={this.props.item.link} target="_blank" styleName="bookmark-link">
         <div styleName="bookmark-info">
           <img src={`${faviconSnatcher}${this.props.item.link}`} styleName="favicon" alt="favicon"/>
           <div styleName="bookmark-text">
@@ -33,6 +37,7 @@ class BookmarkAltView extends Component {
 
 BookmarkAltView.propTypes = {
   item: bookmarkShape,
+  stat: PropTypes.func,
   onDelete: PropTypes.func
 };
 

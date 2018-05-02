@@ -4,9 +4,13 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import BookmarksPage from '../BookmarksPage';
+import SmartFilterPage from '../SmartFilterPage';
 import LoadingIndicator from '../../components/LoadingIndicator/index';
 import styles from './index.css';
-import { getBookmarksLoading, getCollectionsLoading, getCollections } from '../../states/bookmarksState';
+import {
+  getBookmarksLoading, getCollectionsLoading, getCollections,
+  getFilteredBookmarksLoading
+} from '../../states/bookmarksState';
 import { fetchBookmarks, fetchCollections } from '../../actions/bookmarksActions';
 import { collectionShape } from '../../model/collectionShape';
 
@@ -25,7 +29,7 @@ class Main extends Component {
   }
 
   showLoading() {
-    if (this.props.collectionsLoading || this.props.bookmarksLoading) {
+    if (this.props.collectionsLoading || this.props.bookmarksLoading || this.props.filteredBookmarksLoading) {
       return (
         <LoadingIndicator wait={200}/>
       );
@@ -39,6 +43,7 @@ class Main extends Component {
         <Switch>
           <Route exact path="/"/>
           <Route exact path="/collection/:id" component={BookmarksPage}/>
+          <Route exact path="/smart-filter" component={SmartFilterPage}/>
           <Redirect to="/not-found"/>
         </Switch>
       </div>
@@ -51,6 +56,7 @@ Main.propTypes = {
   bookmarksLoading: PropTypes.bool,
   collections: PropTypes.arrayOf(collectionShape),
   collectionsLoading: PropTypes.bool,
+  filteredBookmarksLoading: PropTypes.bool,
   history: PropTypes.object,
   location: PropTypes.object
 };
@@ -58,6 +64,7 @@ Main.propTypes = {
 export default connect(state => ({
   bookmarksLoading: getBookmarksLoading(state),
   collections: getCollections(state),
-  collectionsLoading: getCollectionsLoading(state)
+  collectionsLoading: getCollectionsLoading(state),
+  filteredBookmarksLoading: getFilteredBookmarksLoading(state)
 }))(CSSModules(Main, styles));
 
