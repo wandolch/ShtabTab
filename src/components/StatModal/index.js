@@ -31,7 +31,7 @@ class StatModal extends Component {
 }
 
 StatModal.propTypes = {
-  display: PropTypes.string,
+  display: PropTypes.bool,
   onClose: PropTypes.func,
   title: PropTypes.string,
   children: PropTypes.oneOfType([
