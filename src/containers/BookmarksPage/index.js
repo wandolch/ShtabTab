@@ -13,7 +13,8 @@ import {
 } from '../../states/bookmarksState';
 import {
   fetchCollections, fetchBookmarks, setBookmarksSearch, sendStat,
-  setCurrentCollection, addBookmark, delBookmark, addCollection, shareCollection, deleteCollection, toggleCollectionView
+  setCurrentCollection, addBookmark, delBookmark, addCollection, shareCollection,
+  deleteCollection, toggleCollectionView, editCollection
 } from '../../actions/bookmarksActions';
 import { bookmarkShape } from '../../model/bookmarkShape';
 import { collectionShape } from '../../model/collectionShape';
@@ -31,11 +32,13 @@ class BookmarksPage extends Component {
       newBookmarkLink: '',
       newCollection: '',
       userToShare: '',
+      newCollectionTitle: '',
       loadingDots: '',
       dotsInterval: null,
       statModalOpen: false,
       user: JSON.parse(localStorage.getItem('st-user')),
-      shareCollectionId: null
+      shareCollectionId: null,
+      collectionEditId: null
     };
   }
 
@@ -99,6 +102,10 @@ class BookmarksPage extends Component {
     this.setState({ userToShare: event.target.value });
   };
 
+  onEditInputChange = (event) => {
+    this.setState({ newCollectionTitle: event.target.value });
+  };
+
   onDelete= (id) => {
     this.props.dispatch(delBookmark(id));
   };
@@ -120,6 +127,10 @@ class BookmarksPage extends Component {
 
   onCollectionShare = (id) => {
     this.setState({ shareCollectionId: id });
+  };
+
+  onCollectionEdit = (item) => {
+    this.setState({ collectionEditId: item.id, newCollectionTitle: item.title });
   };
 
   onCollectionDelete = (id) => {
@@ -193,6 +204,13 @@ class BookmarksPage extends Component {
     }
   };
 
+  handleEditInputPress = (event) => {
+    if (event.key === 'Enter' && this.state.newCollectionTitle) {
+      this.props.dispatch(editCollection(this.state.collectionEditId, this.state.newCollectionTitle));
+      this.setState({ collectionEditId: null, newCollectionTitle: '' });
+    }
+  };
+
   showAddBookmarkInput = () => {
     if (this.props.addBookmarkLoading) {
       return (
@@ -230,6 +248,7 @@ class BookmarksPage extends Component {
                 onDelete={this.onCollectionDelete}
                 onToggleView={this.onToggleView}
                 onCollectionShare={this.onCollectionShare}
+                onCollectionEdit={this.onCollectionEdit}
                 key={item.id}/>))}
             </div>
             <div styleName="add-collection">
@@ -297,6 +316,10 @@ class BookmarksPage extends Component {
     this.setState({ shareCollectionId: null, userToShare: '' });
   };
 
+  closeEditModal = () => {
+    this.setState({ collectionEditId: null, newCollectionTitle: '' });
+  };
+
   displayShareModal() {
     return (
       <Modal
@@ -310,6 +333,22 @@ class BookmarksPage extends Component {
           onKeyPress={this.handleShareInputPress}
           type="email"
           placeholder="Email"/>
+      </Modal>
+    );
+  }
+
+  displayEditModal() {
+    return (
+      <Modal
+        title="Edit collection"
+        display={this.state.collectionEditId}
+        onClose={this.closeEditModal}>
+        <p>Please enter new collection name</p>
+        <input
+          value={this.state.newCollectionTitle}
+          onChange={this.onEditInputChange}
+          onKeyPress={this.handleEditInputPress}
+          type="text"/>
       </Modal>
     );
   }
@@ -340,6 +379,7 @@ class BookmarksPage extends Component {
           {this.showBookmarksSide()}
         </main>
         {this.displayShareModal()}
+        {this.displayEditModal()}
         {this.displayStatModal()}
       </div>
     );

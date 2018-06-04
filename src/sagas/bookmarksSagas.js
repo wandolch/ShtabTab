@@ -6,6 +6,8 @@ import {
   addBookmarkSuccess, addCollectionError, addCollectionSuccess,
   bookmarksFetched, bookmarksFetchingError, collectionsFetched,
   collectionsFetchingError, delBookmarkError, delBookmarkSuccess, deleteCollectionError, deleteCollectionSuccess,
+  editCollectionError,
+  editCollectionSuccess,
   getFilteredBookmarksError,
   getFilteredBookmarksSuccess,
   getTopicsError,
@@ -97,6 +99,20 @@ function* shareCollection(action) {
 
 export function* shareCollectionSaga() {
   yield takeLatest(actionTypes.SHARE_COLLECTION, shareCollection);
+}
+
+function* editCollection(action) {
+  try {
+    const res = yield call(BookmarksRepository.editCollection, action.payload);
+    yield put(editCollectionSuccess(res));
+  } catch (e) {
+    yield put(editCollectionError());
+    yield put(applicationError(e));
+  }
+}
+
+export function* editCollectionSaga() {
+  yield takeLatest(actionTypes.EDIT_COLLECTION, editCollection);
 }
 
 function* deleteCollection(action) {

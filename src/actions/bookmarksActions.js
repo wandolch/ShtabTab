@@ -230,3 +230,23 @@ export function sendStat(id) {
     payload: id
   };
 }
+
+export function editCollection(collectionId, newTitle) {
+  return {
+    type: actionTypes.EDIT_COLLECTION,
+    payload: { collectionId, newTitle }
+  };
+}
+
+export function editCollectionSuccess(collections) {
+  return {
+    type: actionTypes.EDIT_COLLECTION_SUCCESS,
+    payload: collections
+  };
+}
+
+export function editCollectionError() {
+  return {
+    type: actionTypes.EDIT_COLLECTION_ERROR
+  };
+}

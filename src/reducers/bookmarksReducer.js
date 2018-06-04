@@ -116,6 +116,22 @@ export default (state = bookmarksState, action) => {
       shareCollectionError: true
     });
 
+  case actionTypes.EDIT_COLLECTION:
+    return Object.assign({}, state, {
+      collectionsLoading: true
+    });
+
+  case actionTypes.EDIT_COLLECTION_SUCCESS:
+    return Object.assign({}, state, {
+      collections: TransformService.mergeUniq([action.payload], state.collections).sort((a, b) => a.index > b.index),
+      collectionsLoading: false
+    });
+
+  case actionTypes.EDIT_COLLECTION_ERROR:
+    return Object.assign({}, state, {
+      collectionsLoading: false
+    });
+
   case actionTypes.DELETE_COLLECTION:
     return Object.assign({}, state, {
       deleteCollectionLoading: true,

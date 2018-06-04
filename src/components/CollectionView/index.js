@@ -18,6 +18,10 @@ class CollectionView extends Component {
     this.props.onCollectionShare(this.props.item.id);
   };
 
+  onEditClick = () => {
+    this.props.onCollectionEdit(this.props.item);
+  };
+
   onDeleteClick = () => {
     this.props.onDelete(this.props.item.id);
   };
@@ -52,7 +56,7 @@ class CollectionView extends Component {
           styleName="context-menu"
           onClick={this.closeContext}
           ref={(el) => { this.contextMenu = el; }}>
-          <div styleName="context-btn">Edit</div>
+          <div onClick={this.onEditClick} styleName="context-btn">Edit</div>
           <div onClick={this.onDeleteClick} styleName="context-btn">Remove</div>
           <div onClick={this.onShareClick} styleName="context-btn">Share</div>
           <div onClick={this.onToggleView} styleName="context-btn">
@@ -88,7 +92,8 @@ CollectionView.propTypes = {
   isActive: PropTypes.bool,
   onCollectionShare: PropTypes.func,
   onDelete: PropTypes.func,
-  onToggleView: PropTypes.func
+  onToggleView: PropTypes.func,
+  onCollectionEdit: PropTypes.func
 };
 
 export default CSSModules(CollectionView, styles);

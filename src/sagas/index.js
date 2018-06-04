@@ -1,6 +1,7 @@
 import { all, fork } from 'redux-saga/effects';
 import {
   addBookmarkSaga, addCollectionSaga, bookmarksSaga, collectionsSaga, deleteBookmarkSaga, deleteCollectionSaga,
+  editCollectionSaga,
   getFilteredBookmarksSaga,
   getTopicsSaga, sendStatSaga,
   shareCollectionSaga, toggleCollectionViewSaga
@@ -16,6 +17,7 @@ export default function* root() {
     fork(deleteBookmarkSaga),
     fork(addCollectionSaga),
     fork(shareCollectionSaga),
+    fork(editCollectionSaga),
     fork(deleteCollectionSaga),
     fork(toggleCollectionViewSaga),
     fork(getTopicsSaga),
