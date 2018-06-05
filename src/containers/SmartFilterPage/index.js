@@ -57,10 +57,10 @@ class SmartFilterPage extends Component {
   checkBookmarksEmpty = () => {
     if (!this.props.bookmarks.length) {
       if (!!this.props.searchQuery.length) {
-        return (<div styleName="nothing-found">No bookmarks found for your query «<b>{this.props.searchQuery}</b>»</div>);
+        return (<div styleName="nothing-found">Не найдено ни одной закладки по запросу «<b>{this.props.searchQuery}</b>»</div>);
       }
       if (!this.props.bookmarksLoading) {
-        return (<div styleName="no-content">No bookmarks</div>);
+        return (<div styleName="no-content">Нет закладок</div>);
       }
     }
   };
@@ -92,7 +92,7 @@ class SmartFilterPage extends Component {
       return (
         <section styleName="bookmarks-container">
           <div styleName="bookmarks-header">
-            <h1 styleName="collection-title">Smart filter</h1>
+            <h1 styleName="collection-title">Закладки по темам</h1>
             <SearchInput onSearch={this.onSearch} />
           </div>
           <div>

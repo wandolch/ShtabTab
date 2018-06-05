@@ -32,7 +32,7 @@ class App extends Component {
       if (process.env.NODE_ENV !== 'production') {
         console.error(err.message);
       }
-      toast.error('Oop, something went wrong!', {
+      toast.error('Кажется что-то пошло не так!', {
         position: toast.POSITION.TOP_RIGHT,
         className: {
           borderRadius: '10px'

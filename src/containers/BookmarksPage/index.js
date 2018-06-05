@@ -71,7 +71,7 @@ class BookmarksPage extends Component {
     if (!nextProps.shareCollectionError && !nextProps.shareCollectionLoading
       && this.props.shareCollectionLoading && !this.props.shareCollectionError) {
       this.closeShareModal();
-      toast.success('Collection has been shared!', {
+      toast.success('Вы поделились коллекцией!', {
         position: toast.POSITION.TOP_RIGHT,
         className: {
           borderRadius: '10px'
@@ -164,10 +164,10 @@ class BookmarksPage extends Component {
   checkBookmarksEmpty = () => {
     if (!this.props.bookmarks.length) {
       if (!!this.props.searchQuery.length) {
-        return (<div styleName="nothing-found">No bookmarks found for your query «<b>{this.props.searchQuery}</b>»</div>);
+        return (<div styleName="nothing-found">Не найдено ни одной закладки по запросу «<b>{this.props.searchQuery}</b>»</div>);
       }
       if (!this.props.bookmarksLoading) {
-        return (<div styleName="no-content">No bookmarks</div>);
+        return (<div styleName="no-content">Нет закладок</div>);
       }
     }
   };
@@ -226,7 +226,7 @@ class BookmarksPage extends Component {
           value={this.state.newBookmarkLink}
           onChange={this.onLinkChange}
           onKeyPress={this.handleAddBookmarkPress}
-          placeholder="place your link here and press enter"
+          placeholder="поместите сюда ссылку и нажмите клавишу enter"
           spellCheck="false"
           styleName="add-bookmark-input"
           type="text"/>
@@ -258,18 +258,18 @@ class BookmarksPage extends Component {
                 onKeyPress={this.handleAddCollectionPress}
                 styleName="add-collection-input"
                 type="text"
-                placeholder="New collection"/>
+                placeholder="Новая коллекции"/>
             </div>
           </div>
           <div styleName="bottom-part">
-            <div styleName="smart-filter" onClick={this.goToSmartFilter}>Smart filter</div>
+            <div styleName="smart-filter" onClick={this.goToSmartFilter}>Фильтровать по темам</div>
             <div styleName="account-info-container">
               <img styleName="avatar" src={this.state.user.picture} alt="avatar"/>
               <div styleName="account-info-block">
                 <div styleName="user-name">{this.state.user.givenName}
                   <span onClick={this.openStatModal} className="material-icons" styleName="stat">info_outline</span>
                 </div>
-                <div onClick={this.onLogout} styleName="logout">logout</div>
+                <div onClick={this.onLogout} styleName="logout">выйти</div>
               </div>
             </div>
           </div>
@@ -323,16 +323,16 @@ class BookmarksPage extends Component {
   displayShareModal() {
     return (
       <Modal
-        title="Share collection"
+        title="Поделиться коллекцией"
         display={this.state.shareCollectionId}
         onClose={this.closeShareModal}>
-        <p>Please enter email of the person you want to share</p>
+        <p>Введите эл. адрес пользователя системы</p>
         <input
           value={this.state.userToShare}
           onChange={this.onShareInputChange}
           onKeyPress={this.handleShareInputPress}
           type="email"
-          placeholder="Email"/>
+          placeholder="johnsmith@mail.com"/>
       </Modal>
     );
   }
@@ -340,10 +340,10 @@ class BookmarksPage extends Component {
   displayEditModal() {
     return (
       <Modal
-        title="Edit collection"
+        title="Редактирование"
         display={this.state.collectionEditId}
         onClose={this.closeEditModal}>
-        <p>Please enter new collection name</p>
+        <p>Введите новое имя коллекции и нажмите enter</p>
         <input
           value={this.state.newCollectionTitle}
           onChange={this.onEditInputChange}
@@ -356,14 +356,14 @@ class BookmarksPage extends Component {
   displayStatModal() {
     return (
       <StatModal
-        title="Ivan's statistics"
+        title="Статистика"
         display={this.state.statModalOpen}
         onClose={this.closeStatModal}>
-        <p>The most visited site — YOUTUBE.COM</p>
-        <p>The most visited site for today — VK.COM</p>
-        <p>The most popular site topic — SOCIAL NETWORK</p>
-        <p>The most popular site topic for today — IT</p>
-        <p>The most unused site — COURSERA.ORG</p>
+        <p>Самый посещаемый сайт — YOUTUBE.COM</p>
+        <p>Самый посещаемый сайт за сегодня — VK.COM</p>
+        <p>Самая частая тема сайта — SOCIAL NETWORK</p>
+        <p>Самая частая тема сайта на сегодня — IT</p>
+        <p>Самый неиспользуемый сайт — COURSERA.ORG</p>
       </StatModal>
     );
   }

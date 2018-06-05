@@ -56,11 +56,11 @@ class CollectionView extends Component {
           styleName="context-menu"
           onClick={this.closeContext}
           ref={(el) => { this.contextMenu = el; }}>
-          <div onClick={this.onEditClick} styleName="context-btn">Edit</div>
-          <div onClick={this.onDeleteClick} styleName="context-btn">Remove</div>
-          <div onClick={this.onShareClick} styleName="context-btn">Share</div>
+          <div onClick={this.onEditClick} styleName="context-btn">Редактировать</div>
+          <div onClick={this.onDeleteClick} styleName="context-btn">Удалить</div>
+          <div onClick={this.onShareClick} styleName="context-btn">Поделиться</div>
           <div onClick={this.onToggleView} styleName="context-btn">
-            {this.props.item.defaultStyle ? 'Alternative view' : 'Default view'}
+            {this.props.item.defaultStyle ? 'Компактные закладки' : 'Стандартные закладки'}
           </div>
         </div>
       );

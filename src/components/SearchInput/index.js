@@ -24,7 +24,7 @@ class SearchInput extends Component {
           type="text"
           autoFocus
           styleName="input"
-          placeholder="Search"
+          placeholder="Поиск"
           onChange={this.dataSearch}/>
       </div>
     );

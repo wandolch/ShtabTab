@@ -2,7 +2,7 @@
 @import "../../style/mixins.css";
 
 .bookmarks-page-wrapper {
-  background-color: black;
+  background-color: rgb(27, 27, 27);
   height: 100%;
 
   .bookmarks-page {
@@ -16,7 +16,7 @@
       color: white;
       width: 260px;
       height: 100%;
-      background-color: black;
+      background-color: rgb(27, 27, 27);
       display: flex;
       flex-direction: column;
       overflow-y: auto;
@@ -31,7 +31,7 @@
     }
 
     .bookmarks-container {
-      background-color: black;
+      background-color: rgb(27, 27, 27);
       width: calc(100% - $menuWidth);
       height: 100%;
       padding: 3.97vh 25px 3.97vh;
@@ -58,10 +58,12 @@
       }
 
       .nothing-found {
+        color: white;
         font-size: 3vh;
       }
 
       .no-content {
+        color: white;
         width: 21vh;
         height: 4vh;
         font-size: 3vh;

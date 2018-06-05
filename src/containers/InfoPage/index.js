@@ -48,7 +48,7 @@ class InfoPage extends Component {
               <span styleName="google-button__icon">
                 <img src={google} alt="google"/>
               </span>
-              <span styleName="google-button__text">Sign in with Google</span>
+              <span styleName="google-button__text">Войти через Google</span>
             </button>
           </GoogleLogin>
         </div>
